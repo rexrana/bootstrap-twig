@@ -1,0 +1,8 @@
+{% import '@macros/nav.twig' as menus %}
+{% import _self as navigation %}
+
+{% set menu_id = menu.id ? 'menu-' ~ menu.id : 'menu-primary' %}
+{% set nav_attributes = { 'id' : menu_id } %}
+{% set nav_properties = { 'dropdown': true } %}
+
+{{ menus.nav( menu, false, nav_attributes, 'ul', 'li', nav_properties ) }}

@@ -1,0 +1,42 @@
+{#
+  Select!
+
+  select_classes: Array (optional): list of classes to apply to the input
+  select_id: String: The heading value of the Alert.
+  select_aria_describedby: string: HTML ID of label for input for ARIA description
+  select_disabled: array : boolean
+  select_multiple: array : boolean
+
+  select_additional_attributes: hash (optional) :
+        additional html attributes to add to input
+        ie. aria-label
+
+  select_options: array : options
+    each option is hash with keys:
+      value: string|int : the value to submit
+      text : the text to display
+      disabled: boolean (true if included)
+      selected: boolean (true if included)
+
+  see http://getbootstrap.com/docs/4.0/components/forms/
+#}
+
+{% set select_classes = select_classes|default(['form-control'])|join(' ')|trim %}
+{% set select_boolean_attributes = [
+  select_disabled ? 'disabled',
+  select_multiple ? 'multiple'
+]|join(' ')|trim %}
+
+{% set select_attributes = { 'id': select_id } %}
+{% if select_aria_describedby %}
+  {% set select_attributes = select_attributes|merge({ 'aria-describedby': select_aria_describedby }) %}
+{% endif %}
+{% if select_additional_attributes %}
+  {% set select_attributes = select_attributes|merge( select_additional_attributes ) %}
+{% endif %}
+
+<select class="{{ select_classes }}" id="{{ select_id }}" {{ attr.attributes( select_attributes ) }} {{ select_boolean_attributes }}>
+  {% for option in select_options %}
+    <option value="{{ option.value }}"{{ option.selected ? ' selected' }}{{ option.disabled ? ' disabled' }}>{{ option.text }}</option>
+  {% endfor %}
+</select>

@@ -1,0 +1,61 @@
+{#
+  Navbar!
+
+  navbar_arialebelledby: String: The aria labelled by value.
+  navbar_attributes: Array: Attributes for the Navbar.
+  navbar_brand_link: String: The URL the brand text will link to.
+  navbar_brand_text: String: The text of the brand.
+  navbar_id: String: The html id for the navbar.
+#}
+
+{% set navbar_classes = [
+  'navbar',
+  'navbar-light', 'bg-light'
+] | sort | join(' ') | trim %}
+
+{% set navbar_id = 'navbar-primary-navigation' %}
+
+<nav role="navigation" class="{{ navbar_classes }}">
+
+  {% block navbar_brand %}
+    <a class="navbar-brand" href="{{site.url}}">{{site.name}}</a>
+
+    {# collapse button #}
+    {% include '@atoms/button/button.twig' with {
+      button_other_classes: 'navbar-toggler',
+      button_toggle: 'collapse',
+      button_other_attributes: {
+        'data-target': '#' ~ navbar_id,
+        'aria-controls': navbar_id,
+        'aria-expanded': 'false',
+        'aria-label': __('Toggle navigation', 'bootstrap-twig'),
+      },
+      button_text: '<span class="navbar-toggler-icon"></span>',
+    } %}
+  {% endblock navbar_brand %}
+
+
+
+
+
+  {# navbar #}
+  {% block navbar_content %}
+    <div class="collapse navbar-collapse" id="{{ navbar_id }}">
+      {{ include('partial/menu-primary.twig')}}
+
+      <form class="form-inline my-2 my-lg-0">
+
+        {% set search_input = {
+        	'input_type': 'search',
+        	'input_classes': ['form-control','mr-sm-2'],
+        	'input_id': 's',
+        	'input_placeholder': __('Search', 'bootstrap-twig'),
+        	'input_additional_attributes': { 'aria-label': __('Search', 'bootstrap-twig') }
+        } %}
+        {{ include('@atoms/forms/input.twig', search_input ) }}
+
+      </form>
+    </div>
+  {% endblock navbar_content %}
+
+</nav>

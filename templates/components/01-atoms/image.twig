@@ -1,0 +1,9 @@
+{# Is `img` an object or string? #}
+{% set imgSrc = img is iterable ? img.src : img %}
+{% set imgAlt = img is iterable ? img.alt : '' %}
+
+{% if bg %}
+  <div style="background-image: url({{ imgSrc }});" class="bg-img {{ class }}"></div>
+{% else %}
+  <img src="{{ imgSrc }}" alt="{{ imgAlt }}" {% if class %} class="{{ class }}"{% endif %} \>
+{% endif %}

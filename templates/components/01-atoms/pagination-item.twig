@@ -1,0 +1,24 @@
+{#
+  Pagination Item
+
+  item_state: String (optional): active or disabled state class
+  item_link: url for item link
+  item_text: text item link
+  item_current: translated text for 'current'
+
+  see https://getbootstrap.com/docs/4.0/components/pagination/ for more details
+#}
+
+{% set classes = [
+  'page-item',
+  item_state ? item_state
+] | join(' ') | trim %}
+
+<li class="{{ classes }}">
+  <a class="page-link" href="{{ item_link }}"{{ ( item_state == 'disabled' ) ? ' tabindex="-1"' : '' }}>
+    {{ item_text }}
+    {% if item_state == 'active' %}
+      <span class="sr-only">{{ item_current ? item_current : '(current)' }}</span>
+    {% endif %}
+  </a>
+</li>

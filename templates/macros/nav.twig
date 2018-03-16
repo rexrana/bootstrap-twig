@@ -1,0 +1,123 @@
+
+{#
+  Nav!
+
+  nav_menu: Array: A list of items to be in the nav.
+
+  nav_classes: String: Choose other classes, like bootstrap sizing, for the nav.
+  nav_attributes: hash: html attributes to include on the nav
+  nav_element: String: Choose the html element of the nav.
+
+  item_element: String (optional): Choose the html element of the nav items.
+  other_item_link_classes: array: add other classes for the nav item links
+
+  nav_properties: hash (key/value pairs)
+    dropdown: Boolean: True | False: Set the selected nav as a dropdown menu.
+    align: String: Center|Right: Choose the nav's alignment.
+    vertical: Boolean: True|False: Choose if the nav will be vertical.
+    tabs: Boolean: True|False: Choose if nav will have tabs.
+    pills: Boolean: True|False: Choose if nav items will be pills.
+    fill: Boolean: True|False: Proportionately fill all available space the nav.
+    justified: Boolean: True|False: Make sure all elements are of equal width.
+
+#}
+
+{% macro nav( nav_menu, nav_classes, nav_attributes, nav_element, item_element, nav_properties, nav_level ) %}
+
+  {% import '@macros/html-attributes.twig' as attr %}
+  {% import _self as subnav %}
+
+  {% set nav_level = nav_level|default(0) %}
+
+  {% set prop_classes = [
+    (nav_level > 1) ? 'submenu',
+  ] %}
+
+  {% if nav_properties %}
+
+    {% set prop_classes = prop_classes|merge([
+      ('align' in nav_properties|keys) ? 'justify-content-' ~ nav_properties.align,
+      ('dropdown' in nav_properties|keys and nav_level > 0 ) ? 'dropdown-menu',
+      ('vertical' in nav_properties|keys) ? 'flex-column',
+      ('tabs' in nav_properties|keys) ? 'nav-tabs',
+      ('pills' in nav_properties|keys) ? 'nav-pills',
+      ('fill' in nav_properties|keys) ? 'nav-fill',
+      ('justify' in nav_properties|keys) ? 'nav-justified'
+    ]) %}
+
+    {% set nav_classes = nav_classes|default(['nav'])|merge(prop_classes) %}
+
+  {% endif %}
+
+  <{{ nav_element| default('ul') }} class="{{ nav_classes|default(['nav'])|unique|join(' ')|trim }}"{{ nav_attributes ? attr.attributes(nav_attributes) }}>
+
+    {% for item in nav_menu.get_items %}
+
+      {% set nav_item_classes = [
+      'nav-item',
+      ('dropdown' in nav_properties|keys and item.children) ? 'dropdown',
+      ] %}
+
+      {% set nav_item_attributes = { 'id' : 'nav-item-' ~ item.id } %}
+
+      {% set nav_item_link_classes = [
+        ( item.children and nav_level > 0 and nav_properties and ('dropdown' in nav_properties|keys) ) ? 'dropdown-item' : 'nav-link',
+        ( item.children and nav_properties and ('dropdown' in nav_properties|keys) ) ? 'dropdown-toggle',
+        item.current ? 'active',
+      ] %}
+
+      {% if item.children and ('dropdown' in nav_properties|keys or 'child-dropdown' in nav_properties|keys) %}
+      {% set nav_item_link_attributes = {
+        'id': 'dropdown-toggle-' ~ item.id,
+        'data-toggle': 'dropdown',
+        'role': 'button',
+        'aria-haspopup': 'true',
+        'aria-expanded': 'false'
+      } %}
+      {% endif %}
+
+      {% if item_element %}
+      <{{item_element}} class="{{ nav_item_classes|join(' ')|trim }}"{{ attr.attributes(nav_item_attributes) }}>
+      {% endif %}
+
+          <a class="{{ nav_item_link_classes|join(' ')|trim }}" href="{{ item.link }}"{{ nav_item_link_attributes ? attr.attributes(nav_item_link_attributes) }}>{{ item.title }}</a>
+
+          {% if item.children %}
+
+              {% set child_level = nav_level + 1 %}
+
+              {% set subnav_menu = {
+              'items': item.children
+              } %}
+
+              {% set subnav_classes = [] %}
+              {% set subnav_attributes = { 'id': 'submenu-' ~ item.id } %}
+              {% set subnav_properties = {} %}
+              {% set subnav_element = nav_element %}
+              {% set subnav_item_element = item_element %}
+
+              {% if 'dropdown' in nav_properties|keys %}
+
+                {% set subnav_element = 'div' %}
+                {% set subnav_item_element = false %}
+                {% set subnav_classes = ['dropdown-menu'] %}
+
+                {% set subnav_properties = subnav_properties|merge({
+                  'dropdown': true
+                }) %}
+
+              {% endif %}
+
+              {{ subnav.nav( subnav_menu, subnav_classes, subnav_attributes, subnav_element, subnav_item_element, subnav_properties, child_level ) }}
+
+          {% endif %}
+
+      {% if item_element %}
+      </{{item_element}}>
+      {% endif %}
+
+    {% endfor %}
+
+  </{{ nav_element| default('ul') }}>
+
+{% endmacro %}

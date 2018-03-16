@@ -1,0 +1,33 @@
+{#
+  Input
+
+  input_type: String: HTML input type:
+  input_classes: Array (optional): list of classes to apply to the input
+  input_id: String: The heading value of the Alert.
+  input_aria_describedby: string: HTML ID of label for input for ARIA description
+  input_placeholder: string (optional): placeholder text for input
+  input_boolean_attributes: array (optional): disabled, readonly
+
+  input_additional_attributes: hash (optional) :
+        additional html attributes to add to input
+        ie. aria-label
+
+  see http://getbootstrap.com/docs/4.0/components/forms/
+#}
+{% import '@macros/html-attributes.twig' as attr %}
+
+{% set input_classes = input_classes|default(['form-control'])|join(' ')|trim %}
+{% set input_boolean_attributes = input_boolean_attributes|default([])|join(' ')|trim %}
+
+{% set input_attributes = { 'id': input_id } %}
+{% if input_placeholder %}
+  {% set input_attributes = input_attributes|merge({ 'placeholder': input_placeholder }) %}
+{% endif %}
+{% if input_aria_describedby %}
+  {% set input_attributes = input_attributes|merge({ 'aria-describedby': input_aria_describedby }) %}
+{% endif %}
+{% if input_additional_attributes %}
+  {% set input_attributes = input_attributes|merge( input_additional_attributes ) %}
+{% endif %}
+
+<input type="{{ input_type }}" class="{{ input_classes }}"{{ attr.attributes( input_attributes) }} {{ input_boolean_attributes }}/>

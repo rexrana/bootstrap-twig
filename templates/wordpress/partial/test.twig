@@ -1,0 +1,15 @@
+<h4>Select Test</h4>
+{% set select = {
+  select_id: 'test-select-1',
+  select_additional_attributes: {
+    'aria-label': 'test select'
+  },
+  'select_options': [
+    { value: '', text: 'Please select a value' },
+    { value: 1, text: 'One' },
+    { value: 2, text: 'Two', selected: true },
+    { value: 3, text: 'Three'},
+  ]
+} %}
+
+{% include '@atoms/forms/select.twig' with select only %}

@@ -1,0 +1,52 @@
+{% set pagination_params = {
+  show_all: false,
+  mid_size: 3,
+  end_size: 2
+} %}
+
+{% set pagination = posts.pagination( pagination_params ) %}
+
+
+{% set prev = {'item_text': __('Previous', 'bootstrap-twig') } %}
+{% set next = {'item_text': __('Next', 'bootstrap-twig') } %}
+
+{% if pagination.prev.link %}
+  {% set prev = prev|merge({ 'item_link': pagination.prev.link }) %}
+{% else %}
+  {% set prev = prev|merge({ 'item_state': 'disabled' }) %}
+{% endif %}
+
+{% if pagination.next.link %}
+  {% set next = next|merge({ 'link': pagination.next.link }) %}
+{% else %}
+  {% set next = next|merge({ 'item_state': 'disabled' }) %}
+{% endif %}
+
+{% set page_items = [ ] %}
+
+{% for item in pagination.pages %}
+
+  {% set temp_item = {
+    'item_current': __('current', 'bootstrap-twig'),
+    'item_link': item.link,
+    'item_text': item.title
+  } %}
+
+  {% if item.current %}
+    {% set temp_item = temp_item|merge({'item_state': 'active'}) %}
+  {% endif %}
+
+  {% set page_items = page_items|merge([temp_item]) %}
+
+{% endfor %}
+
+{% set page_items = [prev]|merge(page_items) %}
+{% set page_items = page_items|merge([next]) %}
+
+{% set pagination_data = {
+'pagination_title': __('Pagination links', 'bootstrap-twig'),
+'page_items': page_items,
+'pagination_other_classes': 'my-4 justify-content-center'
+} %}
+
+{{ include('@molecules/pagination.twig', pagination_data, with_context = false) }}
