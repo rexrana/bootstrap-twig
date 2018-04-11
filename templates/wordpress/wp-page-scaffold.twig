@@ -1,0 +1,25 @@
+{% extends "@templates/page-layout.twig" %}
+
+{% set html_classes = ['no-js'] %}
+{% set html_lang = site.language %}
+{% set page_charset = site.charset %}
+{% set page_title = title ? title : site.name %}
+
+{% block html_head %}
+  {{ parent() }}
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{ function('wp_head') }}
+{% endblock html_head %}
+
+{% block header %}
+  {% include "partial/top-navbar.twig" %}
+{% endblock header %}
+
+{% block footer %}
+  {% include "partial/footer.twig" %}
+{% endblock footer %}
+
+{% block scripts %}
+	{{ function('wp_footer') }}
+{% endblock scripts %}

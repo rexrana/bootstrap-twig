@@ -3,44 +3,95 @@
 
   parent_element: String: ul|ol|div The html element that will contain the list.
   list_id: String: a unique id for the list.
-  items: Object: The items you wish you put into a list.
-  item_element: String: li|a|div The html element that the item will use.
-  item_classes: Array: Accepts active, disabled, list-group-item-action, list-group-item-(color). See https://getbootstrap.com/docs/4.0/components/list-group/#with-badges for examples. See https://getbootstrap.com/docs/4.0/utilities/flex/ for flex options
-  item_text: String: The text of the list item.
-  item_badge: Array: See the documentation for badges in source/_patterns/01-atoms/badge/_badge.twig.
+  item_element: String: li|a|div The html element that the items will use.
   list_flush: Boolean: True|False Only use this variable if the list is on a card. this will make it align properly.
+
+
+  items: Object: The items you wish you put into a list.
+
+    item properties:
+
+    color: contextual classes to style list items with a stateful background and color
+    link: URL for linked items
+    classes: array : additional classes to add to the item, such as flex utilities
+        see https://getbootstrap.com/docs/4.0/utilities/flex/
+
+    boolean attributes:
+        action
+        active
+        disabled
+
+    text: String: The text of the list item.
+    badge: Array: See the documentation for badges in components/01-atoms/badge/_badge.twig.
 
   see https://getbootstrap.com/docs/4.0/components/list-group/
 #}
+{% import '@macros/html-attributes.twig' as attr %}
+
+{% set contextual_classes = [
+  'primary',
+  'secondary',
+  'success',
+  'danger',
+  'warning',
+  'info',
+  'light',
+  'dark'
+] %}
 
 {% set parent_element = parent_element | default('ul') %}
+{% set item_element = item_element | default('li') %}
 
-{% if list_flush %}
-  {% set list_flush = 'list-group-flush' %}
-{% endif %}
+{% set parent_attributes = parent_attributes | default({}) %}
+
+{% set parent_classes = [
+  'list-group',
+  list_flush ? 'list-group-flush'
+] | merge( parent_classes|default([]) ) %}
+
+{% set parent_attributes = parent_attributes|merge({ 'class': parent_classes|join(' ')|trim }) %}
 
 {% if list_id %}
-  {% set list_id = 'id="' ~ list_id ~ '"' %}
+  {% set parent_attributes = parent_attributes|merge({ 'id': list_id }) %}
 {% endif %}
 
-<{{ parent_element }} class="list-group {{ list_flush }}" {{ list_id }}>
+{# collapse parent attibutes down to a string #}
+{% set parent_attributes = attr.attributes( parent_attributes ) %}
+
+<{{ parent_element }}{{ parent_attributes }}>
+
   {% for item in items %}
 
-  {% set element = item.item_element | default('li') %}
+    {% set item_attributes = item.attributes | default({}) %}
 
-  {% set classes = [
-    'list-group-item',
-    'list-group-item-' ~ item.item_color,
-  ] | merge(item.item_classes | default([])) | join(' ') %}
+    {% set item_classes = [
+      'list-group-item',
+      item.color in contextual_classes ? 'list-group-item-' ~ item.color,
+      item.action ? 'list-group-item-action',
+      item.active ? 'active',
+      item.disabled and item_element != 'button' ? 'disabled'
+    ] | merge(item.classes | default([])) | join(' ') %}
 
-  {% set attributes = [
-  ] | merge(item.item_attributes | default([])) | join(' ')%}
+    {% set item_attributes = item_attributes|merge({ 'class': item_classes|join(' ')|trim }) %}
 
-  <{{element}} class="{{ classes }}" {{ item_id }}{{ attributes }}>
-    {{ item.item_text }}
-    {% if item.item_badge %}
-      {% include '@atoms/badge.twig' with item.item_badge %}
+    {% if item.link and item_element == 'a' %}
+      {% set item_attributes = item_attributes|merge({ 'href': item.link }) %}
     {% endif %}
-    </{{element}}>
+
+    {% set item_disabled = item.disabled and item_element == 'button' ? ' disabled' : '' %}
+
+    {% set item_attributes = attr.attributes( item_attributes ) %}
+
+    <{{item_element}}{{ item_attributes }}{{ item_disabled }}>
+
+      {{ item.text }}
+
+      {% if item.badge %}
+        {% include '@atoms/badge.twig' with item.badge %}
+      {% endif %}
+
+    </{{item_element}}>
+
   {% endfor %}
+
 </{{ parent_element }}>

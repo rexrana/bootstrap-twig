@@ -1,0 +1,19 @@
+{#
+  button toolbar - a grouping of button or input groups
+
+  toolbar_label: ARIA label
+  toolbar_size: String: lg|sm set whether the buttons are large or small.
+  toolbar_button_groups: array of button groups
+
+#}
+
+{% set toolbar_classes = [
+  'btn-toolbar',
+  toolbar_size and toolbar_size in ['sm', 'lg'] ? base_toolbar_class ~ '-' ~ toolbar_size,
+]|merge( toolbar_classes|default([]) )|join(' ')|trim %}
+
+<div class="{{ toolbar_classes }}" role="toolbar" aria-label="{{ toolbar_label }}">
+  {% for group in toolbar_button_groups %}
+    {% include '@molecules/buttons/button-group.twig' with group only %}
+  {% endfor %}
+</div>

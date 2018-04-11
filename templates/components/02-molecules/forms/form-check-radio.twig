@@ -1,0 +1,53 @@
+{#
+  Form Check
+
+  check_inline: boolean : true = inline, false = stacked (default)
+
+  label_for: String: The HTML ID or name for input the label describes
+  label_text: Array (optional): list of classes to apply to the input
+  label_classes: Array (optional): list of classes to apply to the input
+
+  input_id: String
+  input_name: String - the name of the input that will be submitted with form
+  input_type: String: HTML input type
+  input_value: string|int : value of input
+  input_classes: Array (optional): list of classes to apply to the input
+  input_aria_describedby: string: HTML ID of label for input for ARIA description
+  input_placeholder: string (optional): placeholder text for input
+  input_disabled: boolean (true/false): disabled on true
+  input_readonly: boolean (true/false): readonly on true
+
+  input_additional_attributes: hash (optional) :
+        additional html attributes to add to input
+        ie. aria-label
+
+  see http://getbootstrap.com/docs/4.0/components/forms/
+
+#}
+
+{% set input = {
+  'input_name': input_name,
+  'input_id': input_id,
+  'input_type': input_type,
+  'input_value': input_value,
+  'input_boolean_attributes': input_boolean_attributes|default([]),
+  'input_additional_attributes': input_additional_attributes|default({}),
+  'input_selected': input_selected|default(false),
+  'input_disabled': input_disabled|default(false),
+  'input_readonly': input_readonly|default(false)
+} %}
+{% set label = {
+  'label_for': input_name ? input_name : input_id,
+  'label_text': label_text,
+  'label_classes': ['form-check-label']
+} %}
+
+{% set check_classes = [
+  'form-check',
+  check_inline ? 'form-check-inline',
+]|join(' ')|trim %}
+
+<div class="{{ check_classes }}">
+  {% include '@atoms/forms/input.twig' with input only %}
+  {% include '@atoms/forms/label.twig' with label only %}
+</div>

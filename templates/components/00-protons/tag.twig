@@ -1,0 +1,31 @@
+{#
+  tag
+
+  element: String: Choose the element type for your tag. Defaults to span
+  text: String: Display text within the element
+  classes: hash: classes to apply to the element.
+  attributes: hash: other attributes to apply to the element.
+#}
+{% import '@macros/html-attributes.twig' as attr %}
+
+{% set element = element | default('span') %}
+
+{% set attributes = attributes | default({}) %}
+
+{% set classes = classes|default([]) %}
+
+{# collapse classes down to a string and add class attribute #}
+{% if classes %}
+  {% set attributes = attributes|merge({ 'class': classes|join(' ')|trim }) %}
+{% endif %}
+
+{# collapse tag attibutes down to a string #}
+{% if attributes %}
+  {% set tag_attributes = attr.attributes( attributes ) %}
+{% endif %}
+
+<{{ element }}{{ tag_attributes }}>
+{% block inner %}
+{{ text }}
+{% endblock inner %}
+</{{ element }}>

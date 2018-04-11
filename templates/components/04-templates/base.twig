@@ -1,0 +1,43 @@
+{#
+ base page template
+
+ defines blocks, is meant to be extended
+
+ html_classes: array : classes to be applied to the <html> element
+ html_attributes: object : additional attributes to be applied to the <html> element
+
+ body_classes: array : classes to be applied to the <html> element
+ body_attributes: object : additional attributes to be applied to the <html> element
+
+
+#}<!doctype html>
+{% import '@macros/html-attributes.twig' as attr %}
+{% set html_classes = html_classes|default([]) %}
+{% set html_attributes = { 'lang': html_lang|default('en') } %}
+{% if html_classes %}
+  {% set html_attributes = html_attributes|merge({ 'class': html_classes|join(' ')|trim }) %}
+{% endif %}
+{% set html_attributes = attr.attributes( html_attributes ) %}
+<html{{ html_attributes }}>
+  <head>
+  {% block html_head %}
+  {% endblock html_head %}
+  </head>
+
+  {% set body_attributes = body_attributes|default({}) %}
+  {% set body_classes = body_classes|default([]) %}
+  {% if body_classes %}
+    {% set body_attributes = body_attributes|merge({ 'class': body_classes|join(' ')|trim }) %}
+  {% endif %}
+  {% set body_attributes = attr.attributes( body_attributes ) %}
+
+  <body{{ body_attributes }}>
+  {% block body %}
+  body
+  {% endblock body %}
+
+  {% block scripts %}
+  <!-- put scripts below -->
+  {% endblock %}
+  </body>
+</html>

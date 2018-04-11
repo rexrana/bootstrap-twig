@@ -1,12 +1,19 @@
 {#
   Input
 
-  input_type: String: HTML input type:
+  input_id: String
+  input_name: String - the name of the input that will be submitted with form
+  input_type: String: HTML input type
+  input_value: string|int : value of input
+  input_size: ( sm | lg ) : size of text for control
   input_classes: Array (optional): list of classes to apply to the input
-  input_id: String: The heading value of the Alert.
   input_aria_describedby: string: HTML ID of label for input for ARIA description
   input_placeholder: string (optional): placeholder text for input
-  input_boolean_attributes: array (optional): disabled, readonly
+
+  boolean attributes:
+    input_selected
+    input_disabled
+    input_readonly
 
   input_additional_attributes: hash (optional) :
         additional html attributes to add to input
@@ -16,10 +23,28 @@
 #}
 {% import '@macros/html-attributes.twig' as attr %}
 
-{% set input_classes = input_classes|default(['form-control'])|join(' ')|trim %}
-{% set input_boolean_attributes = input_boolean_attributes|default([])|join(' ')|trim %}
+{% set input_attributes = {} %}
 
-{% set input_attributes = { 'id': input_id } %}
+{% set base_class = (input_type in ['checkbox', 'radio']) ? 'form-check-input' : 'form-control' %}
+
+{% set input_classes = [
+  base_class,
+  input_size and input_size in ['sm', 'lg'] ? base_class ~ '-' ~ input_size
+]|merge(input_classes|default([])) %}
+
+{% if input_classes %}
+  {% set input_attributes = input_attributes|merge({ 'class': input_classes|join(' ')|trim }) %}
+{% endif %}
+
+{% if input_id %}
+  {% set input_attributes = input_attributes|merge({ 'id': input_id }) %}
+{% endif %}
+{% if input_name %}
+  {% set input_attributes = input_attributes|merge({ 'name': input_name }) %}
+{% endif %}
+{% if input_value %}
+  {% set input_attributes = input_attributes|merge({ 'value': input_value }) %}
+{% endif %}
 {% if input_placeholder %}
   {% set input_attributes = input_attributes|merge({ 'placeholder': input_placeholder }) %}
 {% endif %}
@@ -27,7 +52,20 @@
   {% set input_attributes = input_attributes|merge({ 'aria-describedby': input_aria_describedby }) %}
 {% endif %}
 {% if input_additional_attributes %}
-  {% set input_attributes = input_attributes|merge( input_additional_attributes ) %}
+  {% set input_attributes = input_attributes|merge( input_additional_attributes )|unique %}
 {% endif %}
 
-<input type="{{ input_type }}" class="{{ input_classes }}"{{ attr.attributes( input_attributes) }} {{ input_boolean_attributes }}/>
+{# collapse tag attibutes down to a string #}
+{% if input_attributes %}
+  {% set input_attributes = attr.attributes( input_attributes ) %}
+{% endif %}
+
+
+{% set input_boolean_attributes = [
+  input_selected and input_type in ['checkbox', 'radio']? 'checked',
+  input_selected and input_type not in ['checkbox', 'radio']? 'selected',
+  input_disabled ? 'disabled',
+  input_readonly ? 'readonly'
+]|join(' ')|trim %}
+
+<input type="{{ input_type|default('text') }}"{{ input_attributes }} {{ input_boolean_attributes }}/>

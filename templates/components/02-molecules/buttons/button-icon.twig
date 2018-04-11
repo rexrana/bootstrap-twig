@@ -1,0 +1,21 @@
+{% extends "@atoms/button.twig" %}
+
+{#
+  Icon Button!
+
+  icon_classes: String: button|a|input choose the element type for your button.
+  icon_text: String: Display text in the element of the span.
+
+  See https://getbootstrap.com/docs/4.0/components/buttons/ for more details
+#}
+
+{% set icon_tag = {
+  'element': 'span',
+  'classes': icon_classes|default([]),
+  'text': icon_text
+} %}
+
+{% block inner %}
+  {{ text }}
+  {% include "@protons/tag.twig" with icon_tag only %}
+{% endblock inner %}

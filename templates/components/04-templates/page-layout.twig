@@ -1,0 +1,23 @@
+{% extends "@templates/base.twig" %}
+{#
+  page_charset: character set to be used for the page
+  page_title: page title
+#}
+{% block html_head %}
+<meta charset="{{ page_charset }}" />
+<meta http-equiv="Content-Type" content="text/html; charset={{ page_charset }}" />
+<title>{{ page_title }}</title>
+{% endblock html_head %}
+
+{% block body %}
+
+  {% block header %}
+  {% endblock header %}
+
+  {% block content %}
+  {% endblock content %}
+
+  {% block footer %}
+  {% endblock footer %}
+
+{% endblock body %}

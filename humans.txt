@@ -1,0 +1,10 @@
+## Team
+
+Peter Hebert | Rex Rana Design and Development Ltd.
+https://rexrana.ca
+@RexRanaDesign
+
+
+## Site
+
+Software: Built with [Timber](http://upstatement.com/timber) by Upstatement

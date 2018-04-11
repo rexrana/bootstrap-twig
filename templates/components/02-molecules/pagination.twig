@@ -19,10 +19,18 @@
   pagination_other_classes,
 ] | sort | join(' ') | trim %}
 
+{% if page_items|length > 0 %}
 <nav aria-label="{{ pagination_title }}">
   <ul class="{{ pagination_classes }}">
+    {% if prev %}
+      {{ include('@atoms/pagination-item.twig', prev, with_context = false ) }}
+    {% endif %}
     {% for item in page_items %}
       {{ include('@atoms/pagination-item.twig', item, with_context = false ) }}
     {% endfor %}
+    {% if next %}
+      {{ include('@atoms/pagination-item.twig', next, with_context = false ) }}
+    {% endif %}
   </ul>
 </nav>
+{% endif %}

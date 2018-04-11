@@ -40,12 +40,12 @@
 
 {% endfor %}
 
-{% set page_items = [prev]|merge(page_items) %}
-{% set page_items = page_items|merge([next]) %}
 
 {% set pagination_data = {
-'pagination_title': __('Pagination links', 'bootstrap-twig'),
+'prev': prev,
+'next': next,
 'page_items': page_items,
+'pagination_title': __('Pagination links', 'bootstrap-twig'),
 'pagination_other_classes': 'my-4 justify-content-center'
 } %}
 

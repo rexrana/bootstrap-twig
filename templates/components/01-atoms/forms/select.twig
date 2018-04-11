@@ -1,8 +1,9 @@
 {#
   Select!
 
-  select_classes: Array (optional): list of classes to apply to the input
   select_id: String: The heading value of the Alert.
+  select_name: String - the name of the input that will be submitted with form
+  select_classes: Array (optional): list of classes to apply to the input
   select_aria_describedby: string: HTML ID of label for input for ARIA description
   select_disabled: array : boolean
   select_multiple: array : boolean
@@ -27,7 +28,13 @@
   select_multiple ? 'multiple'
 ]|join(' ')|trim %}
 
-{% set select_attributes = { 'id': select_id } %}
+{% set select_attributes = { } %}
+{% if select_id %}
+  {% set select_attributes = select_attributes|merge({ 'id': select_id }) %}
+{% endif %}
+{% if select_name %}
+  {% set select_attributes = select_attributes|merge({ 'name': select_name }) %}
+{% endif %}
 {% if select_aria_describedby %}
   {% set select_attributes = select_attributes|merge({ 'aria-describedby': select_aria_describedby }) %}
 {% endif %}

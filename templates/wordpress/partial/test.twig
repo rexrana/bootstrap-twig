@@ -1,15 +1,23 @@
-<h4>Select Test</h4>
-{% set select = {
-  select_id: 'test-select-1',
-  select_additional_attributes: {
-    'aria-label': 'test select'
-  },
-  'select_options': [
-    { value: '', text: 'Please select a value' },
-    { value: 1, text: 'One' },
-    { value: 2, text: 'Two', selected: true },
-    { value: 3, text: 'Three'},
-  ]
+{% set image = {
+    'src': 'http://via.placeholder.com/320x180',
+    'width': 320,
+    'height': 160,
+    'alt': 'placeholder image',
+    'fluid': true
 } %}
 
-{% include '@atoms/forms/select.twig' with select only %}
+{% set sources = [
+  {
+      'srcset': 'http://via.placeholder.com/640x360',
+      'media': '(min-width: 600px)',
+      'classes': ['img-fluid']
+  }
+] %}
+
+{% set picture = {
+    'picture_sources': sources,
+    'picture_img': image,
+} %}
+
+
+{% include '@molecules/media/picture.twig' with picture %}

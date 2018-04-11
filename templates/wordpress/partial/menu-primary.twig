@@ -1,8 +1,8 @@
-{% import '@macros/nav.twig' as menus %}
-{% import _self as navigation %}
 
-{% set menu_id = menu.id ? 'menu-' ~ menu.id : 'menu-primary' %}
-{% set nav_attributes = { 'id' : menu_id } %}
-{% set nav_properties = { 'dropdown': true } %}
 
-{{ menus.nav( menu, false, nav_attributes, 'ul', 'li', nav_properties ) }}
+{% import '@macros/menu-test.twig' as menus %}
+
+{% set menu_id = 'menu-' ~ menu.id  %}
+{% set menu_classes = ['navbar-nav', 'mr-auto'] %}
+
+{{ menus.print_menu( menu.items, menu_id, menu_classes, 'ul', 'li' ) }}

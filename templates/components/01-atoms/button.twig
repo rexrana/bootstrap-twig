@@ -1,0 +1,62 @@
+{% extends "@protons/tag.twig" %}
+{#
+  tag
+
+  element: String: Choose the element type for your tag. Defaults to span
+  text: String: Display text within the element
+  classes: aray: classes to apply to the element.
+  attributes: hash: other attributes to apply to the element.
+
+  button specific properties
+
+  button_type: String: the html 'type' attribute.
+  button_outline: Boolean: True|False, remove all background colors and images from a button.
+
+  button_color: String: primary|secondary|success|danger|warning|info|light|dark the color of the button.
+  button_size: String: lg|sm set whether the button is large or small.
+  button_block:  Boolean: True|False set button to occupy the full width the parent element.
+  button_active: Boolean: True|False set button to appear pressed.
+  button_classes: array : Other classes not specified in the template.
+
+  button_toggle: String: button|collapse set button's data-toggle html value.
+  button_link: String: the URL the button will lead to.
+  button_value: String: the html 'value' attribute.
+  button_id: String: The button's html 'id' attribute.
+  button_disabled: Boolean: True|False set button to appear disabled.
+
+#}
+
+{% set element = element | default ('button') %}
+{% set attributes = attributes | default({}) %}
+
+{% set classes = [
+  button_color ? 'btn-' ~ button_color,
+  button_outline ? 'btn-outline-' ~ button_color,
+  button_size and button_size in ['sm', 'lg'] ? 'btn-' ~ button_size,
+  button_block ? 'btn-block',
+  button_active ? 'active'
+]|merge( button_classes|default(['btn']) ) %}
+
+{% if element != 'a' %}
+  {% set attributes = attributes|merge({ 'type': button_type | default('button') }) %}
+{% endif %}
+
+{% if button_active %}
+  {% set attributes = attributes|merge({ 'aria-pressed': true }) %}
+{% endif %}
+
+{% if button_toggle %}
+  {% set attributes = attributes|merge({ 'data-toggle': button_toggle }) %}
+{% endif %}
+
+{% if button_link %}
+  {% set attributes = attributes|merge({ 'href': button_link }) %}
+{% endif %}
+
+{% if button_value %}
+  {% set attributes = attributes|merge({ 'value': button_value }) %}
+{% endif %}
+
+{% if button_id %}
+  {% set attributes = attributes|merge({ 'id': button_id }) %}
+{% endif %}

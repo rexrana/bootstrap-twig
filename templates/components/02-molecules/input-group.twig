@@ -2,11 +2,10 @@
   Input Group!
 
   input_group_classes: Array : classes to apply to outer wrapper.
-
   input_group_prepend: String: text to place before your inputs
   input_group_append: String: text to place after your inputs
 
-  input_group_inputs: array: list of inputs to place in group
+  embed this template and use block group_inputs to place fields in input group
 
 
 #}
@@ -21,19 +20,13 @@
   </div>
   {% endif %}
 
-  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+  {% block group_fields %}
+  {% endblock group_fields %}
 
-  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-
+  {% if input_group_append %}
   <div class="input-group-append">
-    <span class="input-group-text">.00</span>
+    <span class="input-group-text">{{ input_group_append }}</span>
   </div>
+  {% endif %}
 
-</div>
-
-<div class="input-group">
-  <div class="input-group-prepend">
-    <span class="input-group-text">With textarea</span>
-  </div>
-  <textarea class="form-control" aria-label="With textarea"></textarea>
 </div>

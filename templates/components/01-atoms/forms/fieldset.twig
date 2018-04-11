@@ -1,0 +1,16 @@
+{#
+  Fieldset
+
+  fieldset_legend: text : optional legend for fieldset
+
+  this template is meant to be embedded
+  use the 'fieldset_content' block to add the fields within the fieldset
+
+#}
+<fieldset>
+{% if fieldset_legend %}
+  <legend>{{ fieldset_legend }}</legend>
+{% endif %}
+{% block fieldset_content %}
+{% endblock fieldset_content %}
+</fieldset>

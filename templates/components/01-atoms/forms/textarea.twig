@@ -1,0 +1,102 @@
+{#
+  Textarea
+
+  textarea_id: String
+  textarea_name: String - the name of the input that will be submitted with form
+  textarea_value: string|int : value of input
+  textarea_size: ( sm | lg ) : size of text for control
+  textarea_classes: Array (optional): list of classes to apply to the input
+  textarea_aria_describedby: string: HTML ID of label for input for ARIA description
+  textarea_placeholder: string (optional): placeholder text for input
+
+  numeric attributes
+    textarea_cols:    Specifies the visible width of a text area
+    textarea_rows: 	Specifies the visible number of lines in a text area
+    textarea_maxlength:	Specifies the maximum number of characters allowed in the text area
+
+  textarea_boolean_attributes:
+    textarea_autofocus
+    textarea_required
+    textarea_disabled
+    textarea_readonly
+
+  textarea_dirname 	textareaname.dir 	Specifies that the text direction of the textarea will be submitted
+  textarea_form 	form_id 	Specifies one or more forms the text area belongs to
+  textarea_wrap 	(hard | soft) 	Specifies how the text in a text area is to be wrapped when submitted in a form
+
+  textarea_additional_attributes: hash (optional) :
+        additional html attributes to add to input
+        ie. aria-label, etc
+
+  see http://getbootstrap.com/docs/4.0/components/forms/
+  and https://www.w3schools.com/tags/tag_textarea.asp
+
+#}
+
+{% import '@macros/html-attributes.twig' as attr %}
+
+{% set textarea_attributes = {} %}
+
+{% if textarea_cols == false %}
+  {% set textarea_base_classes = ['form-control'] %}
+{% else %}
+  {% set textarea_attributes = textarea_attributes|merge({ 'cols': textarea_cols }) %}
+  {% set textarea_base_classes = [] %}
+{% endif %}
+
+{% set textarea_classes = textarea_base_classes|merge([
+    textarea_size in ['sm', 'lg'] ? 'form-control-' ~ textarea_size
+])|merge(textarea_classes|default([]))|unique %}
+
+{% if textarea_classes %}
+  {% set textarea_attributes = textarea_attributes|merge({ 'class': textarea_classes|join(' ')|trim }) %}
+{% endif %}
+{% if textarea_id %}
+  {% set textarea_attributes = textarea_attributes|merge({ 'id': textarea_id }) %}
+{% endif %}
+{% if textarea_name %}
+  {% set textarea_attributes = textarea_attributes|merge({ 'name': textarea_name }) %}
+{% endif %}
+{% if textarea_value %}
+  {% set textarea_attributes = textarea_attributes|merge({ 'value': textarea_value }) %}
+{% endif %}
+{% if textarea_aria_describedby %}
+  {% set textarea_attributes = textarea_attributes|merge({ 'aria-describedby': textarea_aria_describedby }) %}
+{% endif %}
+{% if textarea_placeholder %}
+  {% set textarea_attributes = textarea_attributes|merge({ 'placeholder': textarea_placeholder }) %}
+{% endif %}
+{% if textarea_rows %}
+  {% set textarea_attributes = textarea_attributes|merge({ 'rows': textarea_rows }) %}
+{% endif %}
+{% if textarea_maxlength %}
+  {% set textarea_attributes = textarea_attributes|merge({ 'maxlength': textarea_maxlength }) %}
+{% endif %}
+{% if textarea_wrap and textarea_wrap in ['hard', 'soft'] %}
+  {% set textarea_attributes = textarea_attributes|merge({ 'wrap': textarea_wrap }) %}
+{% endif %}
+{% if textarea_dirname %}
+  {% set textarea_attributes = textarea_attributes|merge({ 'dirname': textarea_dirname }) %}
+{% endif %}
+{% if textarea_form %}
+  {% set textarea_attributes = textarea_attributes|merge({ 'form': textarea_form }) %}
+{% endif %}
+{% if textarea_additional_attributes %}
+  {% set textarea_attributes = textarea_attributes|merge( textarea_additional_attributes )|unique %}
+{% endif %}
+
+{# collapse tag attibutes down to a string #}
+{% if textarea_attributes %}
+  {% set textarea_attributes = attr.attributes( textarea_attributes ) %}
+{% endif %}
+
+{% set textarea_boolean_attributes = [
+  textarea_autofocus ? 'autofocus',
+  textarea_required ? 'required',
+  textarea_disabled ? 'disabled',
+  textarea_readonly ? 'readonly'
+]|join(' ')|trim %}
+
+<textarea{{ textarea_attributes }} {{ textarea_boolean_attributes }}>
+{{ textarea_value|e('html') }}
+</textarea>

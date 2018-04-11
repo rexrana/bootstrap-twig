@@ -1,0 +1,15 @@
+{% extends "wp-page-scaffold.twig" %}
+
+{% block content %}
+
+<div class="container">
+	<h1>{{ title }}</h1>
+	{% for post in posts %}
+		{% include ['tease-'~post.post_type~'.twig', 'tease.twig'] %}
+	{% endfor %}
+
+	{{ include ('partial/pagination.twig') }}
+
+</div>
+
+{% endblock %}

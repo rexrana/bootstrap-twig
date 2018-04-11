@@ -1,0 +1,16 @@
+{#
+  Label
+
+  label_for: String: The HTML ID or name for input the label describes
+  label_text: Array (optional): list of classes to apply to the input
+  label_classes: Array (optional): list of classes to apply to the input
+
+  see http://getbootstrap.com/docs/4.0/components/forms/
+#}
+{% import '@macros/html-attributes.twig' as attr %}
+
+{% set label_classes = label_classes|default([''])|join(' ')|trim %}
+
+<label for="{{ label_for }}"{{ label_classes ? ' class="' ~ label_classes ~ '"'}}>
+    {{ label_text }}
+</label>

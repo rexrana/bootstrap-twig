@@ -1,0 +1,20 @@
+{% extends "@protons/tag.twig" %}
+{#
+
+picture
+
+picture_sources: array : source elements for the picture element
+picture_img: object : image object
+
+#}
+
+{% set element = 'picture' %}
+
+{% block inner %}
+
+{% for source in picture_sources %}
+  {% include '@atoms/media/source.twig' with source %}
+{% endfor %}
+{% include '@atoms/media/img.twig' with picture_img %}
+
+{% endblock inner %}

@@ -1,0 +1,36 @@
+{% import '@macros/html-attributes.twig' as attr %}
+{% set search_classes = ['form-inline'] %}
+{% set search_attributes = {
+	'action': site.link,
+	'method': 'get',
+	'role': 'search'
+} %}
+{% set search_attributes = search_attributes|merge({ 'class': search_classes|join(' ')|trim }) %}
+{% set search_attributes = attr.attributes( search_attributes ) %}
+
+<form{{ search_attributes }}>
+{% set search_label = __('Search', 'bootstrap-twig') %}
+
+	{% set search_input = {
+		'input_type': 'search',
+		'input_classes': ['form-control'],
+		'input_name': 's',
+		'input_id': 's',
+		'input_placeholder': search_label,
+		'input_additional_attributes': { 'aria-label': search_label }
+	} %}
+
+	{% set search_button = {
+	'button_color': 'secondary',
+	'button_type' : 'submit',
+	'text': search_label
+	} %}
+
+	<div class="input-group">
+		{% include '@atoms/forms/input.twig' with search_input only %}
+	  <div class="input-group-append">
+			{% include '@atoms/button.twig' with search_button only %}
+  	</div>
+	</div>
+
+</form>

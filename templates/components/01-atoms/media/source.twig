@@ -1,0 +1,52 @@
+{% extends "@protons/tag-empty.twig" %}
+{#
+source
+
+see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source
+
+Attributes
+
+This element includes the global attributes.
+
+sizes
+    Is a list of source sizes that describes the final rendered width of the image represented by the source. Each source size consists of a comma-separated list of media condition-length pairs. This information is used by the browser to determine, before laying the page out, which image defined in srcset to use.
+    The sizes attribute has an effect only when the <source> element is the direct child of a <picture> element.
+src
+    Required for <audio> and <video>, address of the media resource. The value of this attribute is ignored when the <source> element is placed inside a <picture> element.
+srcset
+    A list of one or more strings separated by commas indicating a set of possible images represented by the source for the browser to use. Each string is composed of:
+
+        one URL to an image,
+        a width descriptor, that is a positive integer directly followed by 'w'. The default value, if missing, is the infinity.
+        a pixel density descriptor, that is a positive floating number directly followed by 'x'. The default value, if missing, is 1x.
+
+    Each string in the list must have at least a width descriptor or a pixel density descriptor to be valid. Among the list, there must be only one string containing the same tuple of width descriptor and pixel density descriptor.
+    The browser chooses the most adequate image to display at a given point of time.
+    The srcset attribute has an effect only when the <source> element is the direct child of a <picture> element.
+type
+    The MIME-type of the resource, optionally with a codecs parameter. See RFC 4281 for information about how to specify codecs.
+media
+    Media query of the resource's intended media; this should be used only in a <picture> element.
+
+#}
+{% set element = 'source' %}
+
+{% if src %}
+  {% set attributes = attributes|merge({ 'src': src }) %}
+{% endif %}
+
+{% if srcset %}
+  {% set attributes = attributes|merge({ 'srcset': srcset }) %}
+{% endif %}
+
+{% if sizes %}
+  {% set attributes = attributes|merge({ 'sizes': sizes }) %}
+{% endif %}
+
+{% if type %}
+  {% set attributes = attributes|merge({ 'type': type }) %}
+{% endif %}
+
+{% if media %}
+  {% set attributes = attributes|merge({ 'media': media }) %}
+{% endif %}

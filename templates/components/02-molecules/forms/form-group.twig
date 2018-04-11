@@ -1,0 +1,45 @@
+{#
+  Form Group
+  wrapper for label and form control
+
+  group_classes: Array (optional): list of classes to apply to the outside wrapper
+
+  label_for: String: The HTML ID or name for input the label describes
+  label_text: Array (optional): list of classes to apply to the input
+  label_classes: Array (optional): list of classes to apply to the input
+
+  input_type: string : HTML input type
+
+  passes on values for input, label, select or textarea
+
+  see http://getbootstrap.com/docs/4.0/components/forms/
+#}
+
+{% if input_type in ['select', 'textarea'] %}
+  {% set template = '@atoms/forms/' ~ input_type ~ '.twig' %}
+{% else %}
+  {% set template = '@atoms/forms/input.twig' %}
+{% endif %}
+
+{% set group_class = input_type in ['checkbox', 'radio'] ? 'form-check' : 'form-group' %}
+
+{% set group_classes = [group_class]|merge(group_classes|default([]))|join(' ')|trim %}
+
+<div class="{{ group_classes }}">
+  {% if input_type not in ['checkbox', 'radio'] %}
+  {% include '@atoms/forms/label.twig' %}
+  {% endif %}
+
+  {% include template %}
+
+  {% if input_type in ['checkbox', 'radio'] %}
+  {% include '@atoms/forms/label.twig' %}
+  {% endif %}
+
+  {% if feedback_valid %}
+  <div class="valid-feedback">{{ feedback_valid }}</div>
+  {% endif %}
+  {% if feedback_invalid %}
+  <div class="invalid-feedback">{{ feedback_invalid }}</div>
+  {% endif %}
+</div>

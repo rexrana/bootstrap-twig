@@ -1,0 +1,82 @@
+
+{#
+  List
+
+  list_items: Array: A list of items to be in the list. Can be nested.
+  list_classes: String: Choose other classes, like bootstrap sizing, for the list.
+  list_attributes: hash: html attributes to include on the list
+  list_element: String: Choose the html element of the list.
+  item_element: String (optional): Choose the html element of the nav items.
+
+    item propoerties
+
+    element: override list item element
+    attributes: html attributes to include on the list item
+    content: text : inner content of list item
+    classes: classes to apply to the list item
+    children: object : nested list
+
+
+#}
+
+{% macro list( list_items, list_classes, list_attributes, list_element, item_element, list_unstyled, list_inline ) %}
+
+  {% import '@macros/html-attributes.twig' as attr %}
+  {% import _self as nested %}
+
+  {% set list_attributes = list_attributes|default({}) %}
+
+  {% set list_classes = [
+    list_unstyled ? 'list-unstyled',
+    list_inline ? 'list-inline'
+  ] | merge(list_classes|default([]))|unique %}
+
+  {# collapse classes down to a string and add class attribute #}
+  {% if list_classes %}
+    {% set list_attributes = list_attributes|merge({ 'class': list_classes|join(' ')|trim }) %}
+  {% endif %}
+
+  {% set list_attributes = attr.attributes(list_attributes) %}
+
+  <{{ list_element| default('ul') }}{{ list_attributes  }}>
+
+    {% for item in list_items %}
+
+      {% set list_item_element = item.element ? item.element : item_element|default('li') %}
+
+      {% set item_attributes = item.attributes|default({}) %}
+      {% set item_classes = item.classes|default([]) %}
+
+      {% set item_classes = [
+        list_inline ? 'list-inline-item'
+      ] | merge(item.classes|default([]))|unique %}
+
+      {# collapse classes down to a string and add class attribute #}
+      {% if item_classes %}
+        {% set item_attributes = item_attributes|merge({ 'class': item_classes|join(' ')|trim }) %}
+      {% endif %}
+
+      {% set item_attributes = attr.attributes(item_attributes) %}
+
+      <{{ list_item_element }}{{ item_attributes }}>
+
+        {{ item.content }}
+
+          {% if item.children and list_inline == false %}
+
+            {% set child_items = item.children.list_items %}
+            {% set child_classes = item.children.list_classes|default([]) %}
+            {% set child_attributes = item.children.list_attributes|default({}) %}
+            {% set child_list_element = item.children.list_element|default(list_element) %}
+            {% set child_item_element = item.children.item_element|default(item_element) %}
+
+            {{ nested.list( child_list_items, child_list_classes, child_list_attributes, child_list_element, child_item_element ) }}
+          {% endif %}
+
+      </{{list_item_element}}>
+
+    {% endfor %}
+
+  </{{ list_element| default('ul') }}>
+
+{% endmacro %}

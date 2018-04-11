@@ -1,0 +1,114 @@
+
+{#
+  Menu walker
+
+  menu_items: object: items from TimberMenu
+
+  menu_id: string: id for menu
+  menu_classes: String: Choose other classes, like bootstrap sizing, for the nav.
+  menu_element: String: (ul, div) Choose the html element of the menu.
+
+  item_element: String (optional): Choose the html element of the menu items.
+  item_classes: array: add other classes for the menu items
+
+#}
+
+{% macro print_menu( menu_items, menu_id, menu_classes, menu_element, item_element, menu_level ) %}
+
+  {% import '@macros/html-attributes.twig' as attr %}
+  {% import _self as submenu %}
+
+  {% set menu_level = menu_level|default(0) %}
+
+  {% set menu_element = menu_element | default('div') %}
+  {% set item_element = item_element | default(false) %}
+
+  {% set menu_id = menu_id | default( random() ) %}
+  {% set menu_attributes = { 'id': menu_id } %}
+
+  {% set menu_classes = menu_classes|default(['nav']) %}
+  {% set menu_attributes = menu_attributes|merge({ 'class': menu_classes|join(' ')|trim }) %}
+
+  {# collapse menu attibutes down to a string #}
+  {% set menu_attributes = attr.attributes( menu_attributes ) %}
+
+
+  <{{ menu_element }}{{ menu_attributes }}>
+
+  {% for item in menu_items %}
+
+      {# set properties for menu items #}
+      {% set item_attributes = {
+      'id' : 'nav-item-' ~ item.id,
+      } %}
+
+      {% set item_classes = [
+      'nav-item',
+      item.current ? 'active',
+      item.children ? 'dropdown'
+      ] %}
+      {# collapse item classes down to a string and add to item attributes #}
+      {% set item_attributes = item_attributes|merge({ 'class': item_classes|join(' ')|trim }) %}
+
+      {# collapse item attributes down to a string #}
+      {% set item_attributes = attr.attributes( item_attributes ) %}
+
+      {# set properties for links #}
+      {% set link_attributes = {} %}
+
+      {# set dropdown attributes on link if has children #}
+      {% if item.children %}
+          {% set link_attributes = link_attributes|merge({
+          'id': 'dropdown-toggle-' ~ item.id,
+          'data-toggle': 'dropdown',
+          'role': 'button',
+          'aria-haspopup': 'true',
+          'aria-expanded': 'false'
+          }) %}
+      {% endif %}
+
+      {% set link_classes = [
+      menu_level > 0  ? 'dropdown-item' : 'nav-link',
+      item.children ? 'dropdown-toggle',
+      item.current and (not item_element) ? 'active',
+      ] %}
+
+      {# When using a <nav>-based navigation, be sure to include .nav-item on the anchors. #}
+      {% if menu_element == 'nav' and (not item_element) %}
+        {% set link_classes = link_classes|merge(['nav-item']) %}
+      {% endif %}
+
+      {# collapse link classes down to a string and add to link attributes #}
+      {% set link_attributes = link_attributes|merge({ 'class': link_classes|join(' ')|trim }) %}
+
+      {# collapse link attibutes down to a string #}
+      {% set link_attributes = attr.attributes( link_attributes ) %}
+
+
+      {% if item_element %}
+      <{{ item_element }}{{ item_attributes }}>
+      {% endif %}
+
+      <a href="{{ item.link }}"{{ link_attributes }}>{{ item.title }}</a>
+
+      {% if item.children %}
+
+      {% set subnav_id = 'submenu-' ~ item.id  %}
+      {% set subnav_classes = ['dropdown-menu'] %}
+
+      {{ submenu.print_menu( item.children, subnav_id, subnav_classes, 'div', false, menu_level + 1 ) }}
+
+
+      {% endif %}
+
+
+      {% if item_element %}
+      </{{item_element}}>
+      {% endif %}
+
+  {% endfor %}
+
+
+  </{{ menu_element }}>
+
+{% endmacro %}

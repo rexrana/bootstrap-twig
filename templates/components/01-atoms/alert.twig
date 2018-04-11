@@ -1,47 +1,56 @@
+{% extends "@protons/tag.twig" %}
 {#
   Alert!
 
-  type: String: status | warning | error: The type of error to display.
-  alert_degree: String (optional): The degree of error. Set via Type for Accessibility.
-  alert_title: String: The heading value of the Alert.
-  alert_primary: String: The paragraph value of the Alert.
-  alert_secondary: String (optional): The value of the footer.
+  alert_color: String: The color of alert to display.
+  alert_dismissible: boolean (true/false)
+  alert_additional_classes: additional classes to add to the alert
+  alert_heading: optional header h4
 
   see https://getbootstrap.com/docs/4.0/components/alerts/
 #}
+{% set attributes = { 'role': 'alert'} %}
 
-{% set status_classes = {
-  'status': 'success',
-  'error': 'danger',
-  'warning': 'warning',
-  'info': 'info',
-  }
-%}
+{% set element = 'div' %}
 
-{% set alert_classes = [
-  'mb-0',
+{% set status_classes = [
+  'primary',
+  'secondary',
+  'success',
+  'danger',
+  'warning',
+  'info',
+  'light',
+  'dark'
+] %}
+
+{% set classes = [
   'alert',
-  'alert-' ~ status_classes[type],
-  'alert-dismissible',
-  'fade',
-  'show',
-  alert_other_classes,
-] | sort | join(' ') | trim %}
+  alert_color in status_classes ? 'alert-' ~ alert_color
+] %}
 
-{% set alert_degree = ( type == 'error' ? 'role=alert' : 'aria-live=polite' ) %}
+{% if alert_dismissible %}
+  {% set classes = classes|merge(['alert-dismissible', 'fade', 'show']) %}
+{% endif %}
 
-<div class="{{ alert_classes }}" {{ alert_degree }}>
-  {% block alert_header %}
-    <a href="#" role="button" class="close" data-dismiss="alert" aria-label="{{ 'Close'|t }}"><span aria-hidden="true">&times;</span></a>
-    <h4 class="alert-heading">{{ alert_title }}</h4>
-  {% endblock alert_header %}
-  {% block alert_content %}
-    <p>{{ alert_primary }}</p>
-  {% endblock alert_content %}
-  {% block alert_footer %}
-    {% if alert_secondary %}
-      <hr>
-      <p class="mb-0">{{ alert_secondary }}</p>
-    {% endif %}
-  {% endblock alert_footer %}
-</div>
+{% block inner %}
+
+  {{ text }}
+
+  {% if alert_dismissible %}
+
+    {% set close_button = {
+      'button_unstyled': true,
+      'button_classes': ['close'],
+      'attributes': {
+        'data-dismiss': 'alert',
+        'aria-label': __('Close', 'bootstrap-twig')
+      },
+      'text': '<span aria-hidden="true">&times;</span>'
+    } %}
+
+    {% include '@atoms/button.twig' with close_button only %}
+
+  {% endif %}
+
+{% endblock %}

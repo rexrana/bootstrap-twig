@@ -1,0 +1,72 @@
+{% extends "@protons/tag-empty.twig" %}
+{#
+
+  image
+
+    src 	URL 	Specifies the URL of an image
+
+    alt 	text 	Specifies an alternate text for an image
+    height 	pixels 	Specifies the height of an image
+    width 	pixels 	Specifies the width of an image
+
+    classes: array: classes to apply to the image.
+
+    srcset 	URL 	Specifies the URL of the image to use in different situations
+    sizes string  Specifies image sizes for different page layouts
+    longdesc 	URL 	Specifies a URL to a detailed description of an image
+    crossorigin 	anonymous|use-credentials 	Allow images from third-party sites that allow cross-origin access to be used with canvas
+    usemap: string : Specifies a client-side image map to be used with the image
+
+    attributes: object: other attributes to apply to the image.
+ #}
+ {% set element = 'img' %}
+
+ {% set attributes = attributes | default({}) %}
+
+ {% set cors_options = ['anonymous','use-credentials'] %}
+
+ {% set classes = [
+ fluid ? 'img-fluid',
+ thumbnail ? 'img-thumbnail',
+ rounded ? 'rounded'
+ ]|merge( classes|default([]) ) %}
+
+ {% if alt %}
+   {% set attributes = attributes|merge({ 'alt': alt }) %}
+ {% endif %}
+
+ {% if width %}
+   {% set attributes = attributes|merge({ 'width': width }) %}
+ {% endif %}
+
+ {% if height %}
+   {% set attributes = attributes|merge({ 'height': height }) %}
+ {% endif %}
+
+{% if src %}
+  {% set attributes = attributes|merge({ 'src': src }) %}
+{% endif %}
+
+{% if srcset %}
+  {% set attributes = attributes|merge({ 'srcset': srcset }) %}
+{% endif %}
+
+{% if sizes %}
+  {% set attributes = attributes|merge({ 'sizes': sizes }) %}
+{% endif %}
+
+{% if longdesc %}
+  {% set attributes = attributes|merge({ 'longdesc': longdesc }) %}
+{% endif %}
+
+{% if crossorigin and (crossorigin in cors_options) %}
+  {% set attributes = attributes|merge({ 'crossorigin': crossorigin }) %}
+{% endif %}
+
+{% if usemap %}
+  {% set attributes = attributes|merge({ 'usemap': usemap }) %}
+{% endif %}
+
+{% if ismap %}
+  {% set boolean_attributes = boolean_attributes|default([])|merge(['ismap']) %}
+{% endif %}
