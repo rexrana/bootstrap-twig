@@ -17,10 +17,11 @@
       "RexRana\\BootstrapTwig\\": ["src/classes"]
     },
     "files": [
-        "inc/timber.php", 
-        "inc/archive-posts-pagination.php", 
-        "inc/enqueue.php",
-        "inc/misc.php"
+      "inc/archive-posts-pagination.php", 
+      "inc/enqueue.php",
+      "inc/misc.php"
+      "inc/sidebars.php"
+      "inc/timber.php", 
     ]
   },
   "require": {
