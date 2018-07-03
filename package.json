@@ -26,22 +26,22 @@
   },
   "homepage": "https://github.com/rexrana/bootstrap-twig#readme",
   "dependencies": {
-    "bootstrap": "^4.0.0",
+    "bootstrap": "^4.1.1",
     "jquery": "^3.3.1",
-    "popper.js": "^1.14.1"
+    "popper.js": "^1.14.3"
   },
   "devDependencies": {
-    "autoprefixer": "^8.1.0",
+    "autoprefixer": "^8.6.4",
     "cssnano": "^3.10.0",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-postcss": "^7.0.1",
-    "gulp-sass": "^3.1.0",
+    "gulp-sass": "^4.0.1",
     "gulp-sort": "^2.0.0",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
-    "gulp-wp-pot": "^2.2.0",
+    "gulp-wp-pot": "^2.3.1",
     "pump": "^3.0.0",
     "run-sequence": "^2.2.1"
   },
