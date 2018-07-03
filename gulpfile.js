@@ -50,13 +50,14 @@ gulp.task('copy:js', function() {
       './node_modules/jquery/dist/jquery.slim.min.js',
       './node_modules/popper.js/dist/umd/popper.min.js',
       './node_modules/bootstrap/dist/js/bootstrap.min.js',
+			'./src/js/form-validation.js',
     ])
     .pipe(gulp.dest('dist/js/'));
 });
 
 gulp.task('js', function (cb) {
   pump([
-    gulp.src('./src/js/**/*.js'),
+    gulp.src('./src/js/concat/**/*.js'),
     concat('theme.js'),
     uglify(),
     gulp.dest('./dist/js')
@@ -64,7 +65,6 @@ gulp.task('js', function (cb) {
   cb
 );
 });
-
 
 
 // clean out 'dist' directory
@@ -78,9 +78,13 @@ gulp.task('clean', function() {
 
 // build for prod
 gulp.task('build', function() {
-		runSequence( 'clean', [ 'scss:prod', 'js:prod', 'copy:js' ]);
+		runSequence( 'clean', [ 'scss:prod', 'js', 'copy:js' ]);
 });
 
+// build for dev
+gulp.task('build:dev', function() {
+		runSequence( 'clean', [ 'scss:dev', 'js', 'copy:js' ]);
+});
 
 // watch and build for dev
 gulp.task('watch', function() {
