@@ -1,0 +1,41 @@
+  <h5>{{ __('Leave a Reply:', 'bootstrap-twig') }}</h5>
+    <form id="comment-form" method="post" action="{{ site.site_url~'/wp-comments-post.php' }}" class="needs-validation" novalidate>
+          {% if  user %}
+            <input type="hidden" name="email" value="{{ user.email }}">
+            <input type="hidden" name="author" value="{{ user.name }}">
+            <input type="hidden" name="url" value="{{ user.link }}">
+        {% else %}
+
+          <div class="form-group">
+            <label for="email">{{ __('Email', 'bootstrap-twig') }}</label>
+            <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+            <div class="invalid-feedback">{{ __('Please enter a valid email address', 'bootstrap-twig') }}</div>
+          </div>
+
+            <div>
+
+
+                <label for="author">{{ __('Username', 'bootstrap-twig') }}</label>
+                <input required name="author" type="text" id="author"/>
+
+                <label for="url">{{ __('Website URL', 'bootstrap-twig') }}</label>
+                <input name="url" id="url" type="text"/>
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+
+          <label for="comment">{{ __('Comment', 'bootstrap-twig') }}</label>
+          <textarea class="form-control" name="comment" cols="60" rows="3" id="comment" required></textarea>
+          <div class="invalid-feedback">{{ __('Please enter your comment', 'bootstrap-twig') }}</div>
+         </div>
+
+         {% set comment_parent_id = reply_to_comment ? reply_to_comment : comment.ID|default('0') %}
+        <input name="comment_post_ID" value="{{ post.id }}" id="comment_post_ID" type="hidden">
+        <input name="comment_parent" id="comment_parent" value="{{ comment_parent_id }}" type="hidden">
+
+        <div>
+            <button type="submit" name="Submit" class="btn btn-primary">{{ __('Submit', 'bootstrap-twig') }}</button>
+            <button type="reset" class="btn btn-secondary">{{ __('Cancel', 'bootstrap-twig') }}</button>
+        </div>
+    </form>
