@@ -44,10 +44,9 @@
     {% endif %}
   {% endblock card_header %}
 
-  {% if card_image_location == 'top' %}
+  {% if card_image_location == 'top' and card_image %}
     {% block card_image_top %}
-      {# if `card_image` is null, this falls back to a holderjs placeholder #}
-      {% include '@atoms/image.twig' with {
+      {% include '@atoms/media/img.twig' with {
         imageStyleName: 'card',
         class: 'card-img-top',
         img: card_image,
@@ -96,10 +95,9 @@
     </div>
   {% endif %}
 
-  {% if card_image_location == 'bottom' %}
+  {% if card_image_location == 'bottom' and card_image %}
     {% block card_image_bottom %}
-      {# if `card_image` is null, this falls back to a holderjs placeholder #}
-      {% include '@atoms/image.twig' with {
+      {% include '@atoms/media/img.twig' with {
         imageStyleName: 'card',
         class: 'card-img-bottom',
         img: card_image,
