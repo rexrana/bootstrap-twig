@@ -1,40 +1,91 @@
 {% extends "wp-page-scaffold.twig" %}
 
 {% block content %}
-	<div class="content-wrapper">
-		<article class="post-type-{{ post.post_type }}" id="post-{{ post.ID }}">
-			<img src="{{ post.thumbnail.src|resize(1200, 300) }}">
-			<section class="article-content">
-				<h1 class="article-h1">{{ post.title }}</h1>
-				<p class="blog-author">
-					<span>By</span><a href="{{post.author.path}}"> {{ post.author.name }} </a><span>&bull;</span> {{ post.date }}
-				</p>
-				<div class="article-body">
-					{{post.content}}
-				</div>
-			</section>
+<div class="container my-4">
 
-		{{ dump(post) }}
+      <div class="row">
+      {% set main_class = blog_widgets ? 'col-lg-8' : 'col' %}
 
-			<!-- comment box -->
-			<section class="comment-box">
-				<!-- comments -->
-				<div class="comments">
-				    {% if post.comments %}
-					<h3> comments </h3>
-					{% for cmt in post.comments %}
-					    {% include "comment.twig" with {comment:cmt} %}
-					{% endfor %}
-				    {% endif %}
-				</div>
+        <!-- Post Content Column -->
+        <main role="main" class="{{ main_class }}">
+					<article class="post-type-{{ post.post_type }}" id="post-{{ post.ID }}">
+						<header class="article-header">
+							<!-- Preview Image -->
+		          <div>
+								<img class="img-fluid rounded" src="{{ post.thumbnail.src }}" alt="{{ post.thumbnail.alt }}">
+							</div>
 
-				{% if post.comment_status == "closed" %}
-					<p> comments for this post are closed </p>
-				{% else %}
-				    <!-- comment form -->
-				    {% include "comment-form.twig" %}
-				{% endif %}
-			</section>
-		</article>
-	</div><!-- /content-wrapper -->
+							<!-- Title -->
+							<h1>{{ post.title }}</h1>
+							<!-- byline : Author, Date/Time -->
+							<p class="text-muted">
+                {{ __('Posted by <a href="%1$s">%2$s</a> on %3$s', 'bootstrap-twig')|format( post.author.link, post.author.name, post.date|date('F j, Y') ) }}
+							</p>
+						</header>
+						<section class="article-content">
+							<!-- Post Content -->
+							{{ post.content }}
+						</section>
+            <footer class="article-footer">
+              <!-- Tags -->
+              {% if post.terms( 'tag') %}
+              <p>{{ __('Tagged: ', 'bootstrap-twig')}}
+              {% for term in post.terms('tag') %}
+                <a href="{{ term.link }}">{{ term.name }}</a>{{ loop.last ? '' : ', '}}
+              {% endfor %}
+            </p>
+              {% endif %}
+              <!-- Categroies -->
+              {% if post.categories %}
+              <p>{{ __('Categories: ', 'bootstrap-twig')}}
+              {% for term in post.categories %}
+                {% if term.slug != 'uncategorized' %}
+                <a href="{{ term.link }}">{{ term.name }}</a>{{ loop.last ? '' : ', '}}
+                {% endif %}
+              {% endfor %}
+            </p>
+              {% endif %}
+
+            </footer>
+					</article>
+
+          <!-- Comments -->
+          <div class="card mb-4">
+            <h4 class="card-header">{{ __('Comments', 'bootstrap-twig') }}</h4>
+              <div class="card-body">
+              {% if post.comments %}
+                {% for cmt in post.comments %}
+                  {% include '@organisms/comments/comment.twig' with {comment:cmt} %}
+                {% endfor %}
+              {% endif %}
+
+              {% if post.comment_status == 'open' and post.comments|length == 0 %}
+              <p>{{ __('No comments yet.', 'bootstrap-twig') }}</p>
+              {% endif %}
+
+              <!-- Comments Form -->
+    					{% if post.comment_status == "closed" %}
+    						<p>{{ __('Comments for this post are closed.', 'bootstrap-twig') }}</p>
+    					{% else %}
+    							{% include '@organisms/comments/comment-form.twig' %}
+    					{% endif %}
+
+            </div>
+          </div>
+
+
+
+      </main>  <!-- end main content column -->
+
+        <!-- Sidebar Widgets Column -->
+        {% if blog_widgets %}
+        <div class="col-md-4">{{ blog_widgets }}</div>
+        {% endif %}
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+
+
 {% endblock %}
