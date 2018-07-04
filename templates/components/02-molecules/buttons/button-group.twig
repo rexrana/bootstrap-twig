@@ -1,22 +1,22 @@
 {#
   Button group
 
-  group_role: ARIA role (group|toolbar)
   group_label: ARIA label
   group_size: String: lg|sm set whether the buttons are large or small.
   group_buttons: array of button config hashes
   group_classes: array of class names
+  group_vertical: is this a vertical toolbar?
 
 #}
 
-{% set base_group_class = 'btn-' ~ group_role|default('group') %}
+{% set base_group_class = group_vertical ? 'btn-group-vertical' : 'btn-group' %}
 
 {% set group_classes = [
   base_group_class,
   group_size and group_size in ['sm', 'lg'] ? base_group_class ~ '-' ~ group_size,
 ]|merge( group_classes|default([]) )|join(' ')|trim %}
 
-<div class="{{ group_classes }}" role="{{ group_role|default('group') }}" aria-label="{{ group_label }}">
+<div class="{{ group_classes }}" role="group" aria-label="{{ group_label }}">
 {% block group_inner %}
   {% for btn in group_buttons %}
     {% include '@atoms/button.twig' with btn only %}
