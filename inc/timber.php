@@ -59,12 +59,11 @@ class BootstrapTwigSite extends TimberSite {
 		return $context;
 	}
 
+	/* this is where you can add your own functions to twig */
 	function add_to_twig( $twig ) {
-		/* this is where you can add your own functions to twig */
+		$twig->addFilter(new Twig_SimpleFilter('unique', 'array_unique'));
 
-		$twig->addFilter('unique', new Twig_Filter_Function('array_unique', array($this, SORT_STRING) ));
-        
-        // add phone formatter functions to Twig
+        // // add phone formatter functions to Twig
 		$twig->addFilter(new Twig_SimpleFilter('clean_phone', 'bootstrap_twig_clean_phone'));
 		$twig->addFilter(new Twig_SimpleFilter('format_phone', 'bootstrap_twig_format_phone'));
 		$twig->addFilter(new Twig_SimpleFilter('url_domain', 'bootstrap_twig_url_without_protocol'));
