@@ -13,9 +13,9 @@ Install this theme as you would any other, and be sure the Timber plugin is acti
 
 1. Make sure you have installed the plugin for the [Timber Library](https://wordpress.org/plugins/timber-library/) (and Advanced Custom Fields - they [play quite nicely](http://timber.github.io/timber/#acf-cookbook) together).
 2. Download the zip for this theme (or clone it) and move it to `wp-content/themes` in your WordPress installation.
-3. Rename the folder to something that makes sense for your website (generally no spaces and all lowercase). You could keep the name `timber-starter-theme` but the point of a starter theme is to make it your own!
+3. Rename the folder to something that makes sense for your website (generally no spaces and all lowercase). You could keep the name `bootstrap-twig` but the point of a starter theme is to make it your own!
 4. Activate the theme in Appearance >  Themes.
-5. Do your thing! And read [the docs](https://github.com/jarednova/timber/wiki).
+5. Do your thing! And read the [Timber docs](https://github.com/jarednova/timber/wiki).
 
 ## What's here?
 
