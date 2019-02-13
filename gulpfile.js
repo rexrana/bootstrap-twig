@@ -1,98 +1,98 @@
 'use strict';
 
-var gulp = require("gulp");
-var sass = require("gulp-sass");
-var postcss = require("gulp-postcss");
-var autoprefixer = require("autoprefixer");
-var cssnano = require("cssnano");
-var sourcemaps = require("gulp-sourcemaps");
-var concat = require("gulp-concat");
-var runSequence = require("run-sequence");
-var del = require("del");
-var uglify = require("gulp-uglify");
-var pump = require("pump");
-var wpPot        = require('gulp-wp-pot'); // For generating the .pot file.
-var sort         = require('gulp-sort'); // Recommended to prevent unnecessary changes in pot-file.
+const gulp         = require("gulp");
+const sass         = require("gulp-sass");
+const postcss      = require("gulp-postcss");
+const autoprefixer = require("autoprefixer");
+const cssnano      = require("cssnano");
+const sourcemaps   = require("gulp-sourcemaps");
+const concat       = require("gulp-concat");
+const del          = require("del");
+const uglify       = require("gulp-uglify");
+const pump         = require("pump");
+const wpPot        = require('gulp-wp-pot');      // For generating the .pot file.
+const sort         = require('gulp-sort');        // Recommended to prevent unnecessary changes in pot-file.
+const replace      = require('gulp-replace');
 
-gulp.task('scss:prod', function () {
-
-	var plugins = [
-			autoprefixer(),
-			cssnano()
-	];
-
-	return gulp.src('./src/scss/**/*.scss')
-		.pipe(sass().on('error', sass.logError))
-		.pipe(postcss(plugins))
-		.pipe(gulp.dest('./dist/css/'))
-});
-
-gulp.task('scss:dev', function () {
-
-	var plugins = [
-		autoprefixer(),
-	];
-
-	return gulp.src('./src/scss/**/*.scss')
-		.pipe(sourcemaps.init())
-		.pipe(sass().on('error', sass.logError))
-		.pipe(postcss(plugins))
-		.pipe(sourcemaps.write('./'))
-		.pipe(gulp.dest('./dist/css/'))
-
-});
-
-gulp.task('default', function () {
-});
-
-gulp.task('copy:js', function() {
-    return gulp.src([
+// set up paths
+var folders = {
+  styles: {
+      // By using styles/**/*.sass we're telling gulp to check all folders for any sass file
+      src: './src/scss/**/*.scss',
+      // Compiled files will end up in whichever folder it's found in (partials are not compiled)
+      dest: './dist/css/'
+  },
+  js: {
+    src: ['./src/js/concat/**/*.js'],
+    // By using styles/**/*.sass we're telling gulp to check all folders for any sass file
+    copy: [
       './node_modules/jquery/dist/jquery.slim.min.js',
       './node_modules/popper.js/dist/umd/popper.min.js',
       './node_modules/bootstrap/dist/js/bootstrap.min.js',
-			'./src/js/form-validation.js',
-    ])
-    .pipe(gulp.dest('dist/js/'));
-});
+      './src/js/form-validation.js',
+    ],
+    // Compiled files will end up in whichever folder it's found in (partials are not compiled)
+    dest: './dist/js/'
+  },
+  php: ['./**/*.php'],
+  dist: ['dist/**', '!dist']
+};
 
-gulp.task('js', function (cb) {
+// Clean assets from 'dist' directory
+function clean() {
+  return del(folders.dist).then(paths => {
+    console.log('Files and folders that were deleted:\n', paths.join('\n'));
+  });
+}
+
+function css() {
+
+  var plugins = [
+    autoprefixer()
+  ];
+  return gulp
+  .src(folders.styles.src)
+  .pipe(sourcemaps.init())
+  .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
+  .pipe(postcss(plugins))
+  .pipe(sourcemaps.write('./'))
+  .pipe(gulp.dest(folders.styles.dest));
+}
+
+function cssprod() {
+
+  var plugins = [
+    autoprefixer(),
+    cssnano()
+  ];
+  return gulp
+  .src(folders.styles.src)
+  .pipe(sass().on('error', sass.logError))
+  .pipe(postcss(plugins))
+  .pipe(gulp.dest(folders.styles.dest));
+}
+
+function copyjs() {
+  return gulp.src(folders.js.copy)
+  .pipe(gulp.dest(folders.js.dest));
+}
+
+function js(cb) {
   pump([
-    gulp.src('./src/js/concat/**/*.js'),
+    gulp.src(folders.js.src),
     concat('theme.js'),
     uglify(),
-    gulp.dest('./dist/js')
+    gulp.dest(folders.js.dest)
   ],
-  cb
-);
-});
-
-
-// clean out 'dist' directory
-gulp.task('clean', function() {
-  return del(['dist/**', '!dist']).then(paths => {
-		    console.log('Files and folders that were deleted:\n', paths.join('\n'));
-		});
-
-});
-
-
-// build for prod
-gulp.task('build', function() {
-		runSequence( 'clean', [ 'scss:prod', 'js', 'copy:js' ]);
-});
-
-// build for dev
-gulp.task('build:dev', function() {
-		runSequence( 'clean', [ 'scss:dev', 'js', 'copy:js' ]);
-});
+  cb);
+}
 
 // watch and build for dev
-gulp.task('watch', function() {
-
-	gulp.watch('./src/scss/**/*.scss', [ 'scss:dev' ]);
-	gulp.watch('./src/js/**/*.js', [ 'js' ]);
-
-});
+function watchFiles() {
+  gulp.watch(folders.styles.src, css);
+  gulp.watch(folders.js.src, js);
+  gulp.watch(folders.php, translate);
+}
 
  /**
   * WP POT Translation File Generator.
@@ -103,9 +103,9 @@ gulp.task('watch', function() {
   *     3. Applies wpPot with the variable set at the top of this file
   *     4. Generate a .pot file of i18n that can be used for l10n to build .mo file
   */
- gulp.task( 'translate', function () {
+ function translate() {
      return gulp
-       .src("**/*.php")
+       .src(folders.php)
        .pipe(sort())
        .pipe(wpPot({
            domain: "bootstrap-twig",
@@ -113,5 +113,21 @@ gulp.task('watch', function() {
            bugReport: "https://rexrana.ca/contact/",
            lastTranslator: "Peter Hebert <peter@rexrana.ca>"
          }))
+        .pipe(replace(/\(C\) ([0-9]{4}) ([A-Za-z ]+)/g, '(C) $1 Rex Rana Design and Development Ltd.'))
        .pipe(gulp.dest("./languages/bootstrap-twig.pot"));
- });
+ }
+
+// define complex tasks
+const build = gulp.series(clean, gulp.parallel(cssprod, js, copyjs));
+const watch = gulp.parallel(watchFiles);
+
+// export tasks
+exports.clean = clean;
+exports.css = css;
+exports.cssprod = cssprod;
+exports.build = build;
+exports.translate = translate;
+exports.js = js;
+exports.copyjs = copyjs;
+exports.watch = watch;
+exports.default = watch;
