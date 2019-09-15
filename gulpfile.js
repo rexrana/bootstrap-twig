@@ -1,7 +1,11 @@
 'use strict';
+ 
+const Fiber = require('fibers');
+const gulp = require('gulp');
+const sass = require('gulp-sass');
 
-const gulp         = require("gulp");
-const sass         = require("gulp-sass");
+sass.compiler = require('sass');
+
 const postcss      = require("gulp-postcss");
 const autoprefixer = require("autoprefixer");
 const cssnano      = require("cssnano");
@@ -53,12 +57,12 @@ function css() {
   return gulp
   .src(folders.styles.src)
   .pipe(sourcemaps.init())
-  .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
+  .pipe(sass({fiber: Fiber, outputStyle: 'expanded'}).on('error', sass.logError))
   .pipe(postcss(plugins))
   .pipe(sourcemaps.write('./'))
   .pipe(gulp.dest(folders.styles.dest));
 }
-
+ 
 function cssprod() {
 
   var plugins = [
@@ -67,7 +71,7 @@ function cssprod() {
   ];
   return gulp
   .src(folders.styles.src)
-  .pipe(sass().on('error', sass.logError))
+  .pipe(sass({fiber: Fiber}).on('error', sass.logError))
   .pipe(postcss(plugins))
   .pipe(gulp.dest(folders.styles.dest));
 }
