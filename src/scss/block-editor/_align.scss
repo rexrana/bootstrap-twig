@@ -1,0 +1,24 @@
+/* Wide and Full alignment */
+.alignwide,
+.alignfull {
+	margin: ($spacer * 2) calc(50% - 50vw);
+	max-width: 100vw;
+	width: 100vw;
+}
+
+$bp-alignwide: map-get($grid-breakpoints, xl ) + ($grid-gutter-width * 4);
+.alignwide {
+    
+    @media screen and (min-width: $bp-alignwide ) {
+        margin-left: ($grid-gutter-width * -1.5);
+        margin-right: ($grid-gutter-width * -1.5);
+        width: ( map-get($container-max-widths, xl ) + ($grid-gutter-width * 2) );
+    }
+
+    @media screen and (min-width: 1600px ) {
+        margin-left: ($grid-gutter-width * -4);
+        margin-right: ($grid-gutter-width * -4);
+        width: ( map-get($container-max-widths, xl ) + ($grid-gutter-width * 7) );
+    }
+
+}
