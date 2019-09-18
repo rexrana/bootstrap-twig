@@ -23,6 +23,6 @@ msgstr ""
 msgid "Widgets shown on the blog feed pages"
 msgstr ""
 
-#: inc/timber.php:31
+#: inc/timber.php:32
 msgid "Primary Menu"
 msgstr ""
