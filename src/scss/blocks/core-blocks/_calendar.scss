@@ -1,0 +1,38 @@
+
+.wp-block-calendar {
+	text-align: center;
+
+	th,
+	tbody td {
+		padding: $table-cell-padding;
+		border: $border-width solid $border-color;
+	}
+
+	tfoot td {
+		border: none;
+	}
+
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		font-family: $font-family-base;
+	}
+
+	table th {
+		font-weight: 400;
+		background: $gray-200;
+	}
+
+	a {
+		text-decoration: underline;
+	}
+
+	tfoot a {
+		color: $link-color;
+	}
+
+	table tbody,
+	table caption {
+		color: $gray-700;
+	}
+}

@@ -1,0 +1,12 @@
+.wp-block-cover-image,
+.wp-block-cover {
+
+    // Apply max-width to floated items that have no intrinsic width
+	&.alignleft,
+	&.alignright {
+		max-width: map-get($container-max-widths, xl) / 2;
+		width: 100%;
+	}
+
+}
+

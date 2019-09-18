@@ -2,10 +2,13 @@
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import "mixins/**/*.scss";
 
+@import "wordpress";
+
 /* ----------------- */
 /* core block styles */
 /* ----------------- */
 
-@import "blocks/**/*.scss";
+// @import "blocks/core-variables/*.scss";
+@import "blocks/core-blocks/*.scss";
 
 /* end core block styles */
