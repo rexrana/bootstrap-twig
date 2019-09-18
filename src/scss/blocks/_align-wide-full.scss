@@ -1,3 +1,4 @@
+$bp-alignwide: map-get($grid-breakpoints, xl ) + ($grid-gutter-width * 4);
 
 /* Wide and Full alignment */
 
@@ -8,7 +9,6 @@
 	width: 100vw;
 }
 
-$bp-alignwide: map-get($grid-breakpoints, xl ) + ($grid-gutter-width * 4);
 .alignwide {
     
     @media screen and (min-width: $bp-alignwide ) {
