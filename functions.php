@@ -1,4 +1,12 @@
 <?php
+/**
+ * Bootstrap Twig functions file
+ * 
+ * @package BootstrapTwig
+ * @version 0.1.0
+ */
+
+define('BOOTSTRAP_VERSION', '4.3.1');
 
 // autoloader
 require_once (__DIR__ . '/vendor/autoload.php');

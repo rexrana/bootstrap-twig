@@ -8,10 +8,10 @@
  *
  * Methods for TimberHelper can be found in the /lib sub-directory
  *
- * @package  WordPress
- * @subpackage  Timber
- * @since   Timber 0.1
+ * @package BootstrapTwig
+ * @since   0.1.0
  */
+
 $context = Timber::get_context();
 
 require_once ( get_template_directory() . '/inc/archive-posts-pagination.php' );

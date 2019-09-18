@@ -4,9 +4,8 @@
  *
  * Methods for TimberHelper can be found in the /functions sub-directory
  *
- * @package  WordPress
- * @subpackage  Timber
- * @since    Timber 0.1
+ * @package BootstrapTwig
+ * @since   0.1.0
  */
 
 $context = Timber::get_context();
