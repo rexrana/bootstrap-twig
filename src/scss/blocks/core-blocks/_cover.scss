@@ -1,11 +1,34 @@
 .wp-block-cover-image,
 .wp-block-cover {
 
-    // Apply max-width to floated items that have no intrinsic width
 	&.alignleft,
-	&.alignright {
-		max-width: map-get($container-max-widths, xl) / 2;
+	&.alignright,
+	&.aligncenter {
+		max-width: 100%;
 		width: 100%;
+	}
+	
+
+	@media screen and (min-width: 480px) {
+
+		// Apply max-width to floated items that have no intrinsic width
+		&.alignleft,
+		&.alignright {
+			max-width: 50%;
+			width: 50%;
+		}
+		&.aligncenter {
+			width: 66%;
+		}
+	}
+
+	@include media-breakpoint-up(lg) {
+
+		&.alignleft,
+		&.alignright {
+			max-width: 33%;
+			width: 33%;
+		}
 	}
 
 }
