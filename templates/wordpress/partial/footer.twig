@@ -1,19 +1,12 @@
 <footer id="page-footer">
-
-<div class="footer-inner container">
-  <div class="row">
-    <div class="col-sm">
-
-{{ __('&copy; Copyright %s', 'bootstrap-twig')|format( "now"|date('Y') ) }}
-
+  <div class="footer-inner container">
+    {% if sidebars.footer %}
+    <div class="row">
+      {{ sidebars.footer }}
     </div>
-    <div class="col-sm">
-      One of three columns
-    </div>
-    <div class="col-sm">
-      One of three columns
+    {% endif %}
+    <div class="row">
+      <div class="col-sm">{{ __('&copy; Copyright %1$s %2$s', 'bootstrap-twig')|format( "now"|date('Y'), site.name ) }}</div>
     </div>
   </div>
-</div>
-
 </footer>

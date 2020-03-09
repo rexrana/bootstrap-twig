@@ -4,9 +4,20 @@
 
 <div class="container">
 
+	{% if sidebars.blog %}
+	<div class="row my-4">
+		<div class="col-lg-7 col-xl-8">
+	{% endif %}
+
 	{% for post in posts %}
 		{% include ['tease-'~post.post_type~'.twig', 'tease.twig'] %}
 	{% endfor %}
+
+	{% if sidebars.blog %}
+		</div>
+		<div class="col-lg-5 col-xl-4">{{ sidebars.blog }}</div>
+	</div>
+	{% endif %}
 
 	{{ include ('partial/pagination.twig') }}
 

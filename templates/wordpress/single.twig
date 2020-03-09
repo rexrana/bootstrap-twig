@@ -4,7 +4,7 @@
 <div class="container my-4">
 
       <div class="row">
-      {% set main_class = blog_widgets ? 'col-lg-8' : 'col' %}
+      {% set main_class = sidebars.blog ? 'col-lg-8' : 'col' %}
 
         <!-- Post Content Column -->
         <main role="main" class="{{ main_class }}">
@@ -76,10 +76,9 @@
 
 
       </main>  <!-- end main content column -->
-
         <!-- Sidebar Widgets Column -->
-        {% if blog_widgets %}
-        <div class="col-md-4">{{ blog_widgets }}</div>
+        {% if sidebars.blog %}
+        <div class="col-md-4">{{ sidebars.blog }}</div>
         {% endif %}
 
       </div>

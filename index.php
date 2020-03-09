@@ -16,7 +16,6 @@ $context = Timber::get_context();
 
 require_once ( get_template_directory() . '/inc/archive-posts-pagination.php' );
 
-
 $templates = array( 'index.twig' );
 if ( is_home() ) {
 	array_unshift( $templates, 'home.twig' );

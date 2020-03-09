@@ -11,7 +11,7 @@ if ( ! function_exists( 'bootstrap_twig_register_sidebars' ) ) {
         array(
           'id'            => 'blog-widgets',
           'name'          => __( 'Blog', 'bootstrap-twig' ),
-          'description'   => __( 'Widgets shown on the blog feed pages', 'bootstrap-twig' ),
+          'description'   => __( 'Widgets shown on blog archive pages', 'bootstrap-twig' ),
         ),
         array(
           'id'            => 'footer-widgets',
@@ -21,13 +21,10 @@ if ( ! function_exists( 'bootstrap_twig_register_sidebars' ) ) {
       );
 
       $defaults = array(
-        'name'          => 'Sidebar',
-        'id'            => 'sidebar',
-        'description'   => 'The Sidebar contains widgets',
         'class'         => 'card my-4',
-        'before_widget' => '<div id="%1$s" class="card mb-4 %2$s">',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
     		'after_widget'  => '</div>',
-        'before_title'  => '<h5 class="card-header">',
+        'before_title'  => '<h5>',
     		'after_title'   => '</h5>',
       );
 

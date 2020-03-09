@@ -56,6 +56,12 @@ class BootstrapTwigSite extends TimberSite {
 
 		$context['search_form'] = get_search_form( false );
 
+		// get sidebars
+		$context['sidebars'] = array(
+			'blog'=> Timber::get_widgets( 'blog-widgets' ),
+			'footer'=> Timber::get_widgets( 'footer-widgets' ),
+		);
+
 		$context['site'] = $this;
 		return $context;
 	}
