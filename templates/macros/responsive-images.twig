@@ -1,0 +1,32 @@
+{# sourceset - pass array of sources 
+seach value can either be string of url, or object with keys:
+- url: url of image
+- size: 440px, 100vw, etc
+#}
+{% macro srcset( sources ) %}
+{% for src in sources %}
+    {% if src is iterable %}
+        {{ src.url }} {{ src.size }}
+    {% else %}
+        {{ src }}
+    {% endif %}
+ {% if not loop.last %}, {% endif %}
+ {% endfor %}
+{% endmacro %}
+
+{# sizes - pass array of sources 
+seach value can either be string of url, or object with keys:
+- media_query: ie. (min-width: 36em)
+- length: 440px, 100vw, calc, etc
+last value should be default size, i.e. 100vw
+#}
+{% macro sizes( sizes ) %}
+{% for size in sizes %}
+    {% if size is iterable %}
+        {{ size.media_query }} {{ size.length }}
+    {% else %}
+        {{ size }}
+    {% endif %}
+ {% if not loop.last %}, {% endif %}
+ {% endfor %}
+{% endmacro %}

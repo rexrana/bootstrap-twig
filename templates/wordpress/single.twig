@@ -11,9 +11,11 @@
 					<article class="post-type-{{ post.post_type }}" id="post-{{ post.ID }}">
 						<header class="article-header">
 							<!-- Preview Image -->
-		          <div>
-								<img class="img-fluid rounded" src="{{ post.thumbnail.src }}" alt="{{ post.thumbnail.alt }}">
+              {% if post.thumbnail %}
+		          <div class="featured-image">
+              {% include "partial/featured-image--full.twig" %}
 							</div>
+              {% endif %}
 
 							<!-- Title -->
 							<h1>{{ post.title }}</h1>

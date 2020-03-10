@@ -1,30 +1,8 @@
-{#
-  empty tag
+{# empty tag #}
+{% extends "@protons/tag.twig" %}
 
-  element: String: Choose the element type for your tag.
-  classes: hash: classes to apply to the element.
-  attributes: hash: other attributes to apply to the element.
-#}
-{% import '@macros/html-attributes.twig' as attr %}
+{% block inner %}
+{% endblock %}
 
-{% set element = element | default('span') %}
-
-{% set attributes = attributes | default({}) %}
-
-
-
-{% set classes = classes|default([]) %}
-
-{# collapse classes down to a string and add class attribute #}
-{% if classes %}
-  {% set attributes = attributes|merge({ 'class': classes|join(' ')|trim }) %}
-{% endif %}
-
-{# collapse tag attibutes down to a string #}
-{% if attributes %}
-  {% set tag_attributes = attr.attributes( attributes ) %}
-{% endif %}
-
-{% set boolean_attributes = boolean_attributes|default([]) %}
-
-<{{ element }}{{ tag_attributes }} {{ boolean_attributes|join(' ')|trim }}>
+{% block closing %}
+{% endblock %}

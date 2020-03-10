@@ -1,10 +1,11 @@
 {#
   tag
 
-  element: String: Choose the element type for your tag. Defaults to span
-  text: String: Display text within the element
-  classes: hash: classes to apply to the element.
-  attributes: hash: other attributes to apply to the element.
+  element: string: Choose the element type for your tag. Defaults to span
+  text: string: Display text within the element
+  classes: array: classes to apply to the element.
+  attributes: object: other attributes to apply to the element, in key/value.
+  boolean_attributes: array: boolean attribute values, if present just prints keys
 #}
 {% import '@macros/html-attributes.twig' as attr %}
 
@@ -21,11 +22,21 @@
 
 {# collapse tag attibutes down to a string #}
 {% if attributes %}
-  {% set tag_attributes = attr.attributes( attributes ) %}
+  {% set attributes = attr.attributes( attributes ) %}
 {% endif %}
 
-<{{ element }}{{ tag_attributes }}>
+{% if boolean_attributes %}
+  {% set attributes = attributes ~ ' ' ~ boolean_attributes|join(' ') %}
+{% endif %}
+
+{% block opening %}
+<{{ element }}{{ attributes }}>
+{% endblock %}
+
 {% block inner %}
 {{ text }}
-{% endblock inner %}
+{% endblock %}
+
+{% block closing %}
 </{{ element }}>
+{% endblock %}

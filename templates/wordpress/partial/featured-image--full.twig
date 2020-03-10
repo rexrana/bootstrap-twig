@@ -1,0 +1,24 @@
+{# partial for displaying post thumbnails 
+pass variables:
+- size: name of a defined WordPress image size, e.g. 'medium', or 
+- alt: alternative text for screen readers, optionally override what's set in media library
+#}
+{% import '@macros/responsive-images.twig' as resp %}
+
+{% set srcset = resp.srcset([
+	{ url: post.thumbnail.src|resize(1140), size: '1140w' },
+	{ url: post.thumbnail.src|resize(960), size: '960w' },
+	{ url: post.thumbnail.src|resize(720), size: '720w' },
+	{ url: post.thumbnail.src|resize(540), size: '540w' },
+	{ url: post.thumbnail.src|resize(320), size: '320w' }
+]) %}
+
+{% set img_data = {
+	'src': size ? post.thumbnail.src(size) : post.thumbnail.src,
+	'alt': alt ? alt : post.thumbnail.alt,
+	'srcset': srcset,
+	'sizes': '100vw',
+	'classes': ['img-fluid']
+} %}
+
+{% include "@atoms/media/img.twig" with img_data only %}
