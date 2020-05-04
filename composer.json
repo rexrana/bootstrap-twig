@@ -11,19 +11,5 @@
       "homepage": "https://rexrana.ca/",
       "role": "Developer"
     }
-  ],
-  "autoload": {
-    "psr-4": {
-      "RexRana\\BootstrapTwig\\": ["src/classes"]
-    },
-    "files": [
-      "inc/timber.php",
-      "inc/enqueue.php",
-      "inc/misc.php",
-      "inc/sidebars.php"
-    ]
-  },
-  "require": {
-    "giggsey/libphonenumber-for-php": "^8.9"
-  }
+  ]
 }

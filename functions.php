@@ -6,10 +6,13 @@
  * @version 0.1.0
  */
 
-define('BOOTSTRAP_VERSION', '4.3.1');
+define('BOOTSTRAP_VERSION', '4.4.1');
 
-// autoloader
-require_once (__DIR__ . '/vendor/autoload.php');
+// load includes
+require_once (__DIR__ . '/inc/timber.php');
+require_once (__DIR__ . '/inc/enqueue.php');
+require_once (__DIR__ . '/inc/misc.php');
+require_once (__DIR__ . '/inc/sidebars.php');
 
 new BootstrapTwigSite();
 

@@ -8,50 +8,33 @@ function bootstrap_twig_set_product( $post ) {
     }
 }
 
-// clean phone number for use in tel: link
-function bootstrap_twig_clean_phone($str) {
-
-    $phoneUtil = \libphonenumber\PhoneNumberUtil::getInstance();
-    try {
-        $number = $phoneUtil->parse($str, "CA");
-        return $phoneUtil->format($number, \libphonenumber\PhoneNumberFormat::E164);
-    } catch (\libphonenumber\NumberParseException $e) {
-        log_error($e);
-    }
-
-}
-
-function bootstrap_twig_format_phone($str) {
-
-    $phoneUtil = \libphonenumber\PhoneNumberUtil::getInstance();
-    try {
-        $number = $phoneUtil->parse($str, "CA");
-        return $phoneUtil->format($number, \libphonenumber\PhoneNumberFormat::NATIONAL);
-    } catch (\libphonenumber\NumberParseException $e) {
-        log_error($e);
-    }
-
-}
-
 function bootstrap_twig_url_without_protocol($url) {
     return parse_url($url, PHP_URL_HOST);
 }
 
-// add bootstrap classes to comment_reply_link
-add_filter( 'comment_reply_link', 'bootstrap_twig_filter_comment_reply_link', 10, 4 );
-function bootstrap_twig_filter_comment_reply_link( $html, $args, $comment, $post ) {
+/**
+ * add bootstrap classes to comment_reply_link
+ *
+ * @param string $html
+ * @param array $args Override default options.
+ * @param int|WP_Comment $comment (Optional) Comment being replied to. Default current comment.
+ * @param int|WP_Post $post (Optional) Post ID or WP_Post object the comment is going to be displayed on. Default current post.
+ * @return string
+ */
+function bootstrap_twig_filter_comment_reply_link( $html, $args = array(), $comment = null, $post = null ) {
 
     return preg_replace_callback('/class=\'([a-z- ]+)\'/', function($m) {
 
-    $pattern = "/\bcomment-reply-link\b/" ;
-    $replacement = "btn btn-sm btn-secondary";
+        $pattern = "/\bcomment-reply-link\b/" ;
+        $replacement = "btn btn-sm btn-secondary";
 
-    if(strpos($m[1], "comment-reply-link") !== false) {
-        $m[0] = preg_replace($pattern, $replacement,$m[0],1);
-    }
+        if(strpos($m[1], "comment-reply-link") !== false) {
+            $m[0] = preg_replace($pattern, $replacement,$m[0],1);
+        }
 
-    return $m[0];
+        return $m[0];
 
        }, $html);
 
 }
+add_filter( 'comment_reply_link', 'bootstrap_twig_filter_comment_reply_link', 10, 4 );
