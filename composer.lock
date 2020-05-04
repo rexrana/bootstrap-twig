@@ -1,28 +1,28 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "2954e5925d67bea9543e1ca91d456cb2",
     "packages": [
         {
             "name": "giggsey/libphonenumber-for-php",
-            "version": "8.9.3",
+            "version": "8.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "ace655b505f58cc75481e0df54e93418bfa4736d"
+                "reference": "030682bc4fcdc0c6fb85b68aec2ffeff6978768a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/ace655b505f58cc75481e0df54e93418bfa4736d",
-                "reference": "ace655b505f58cc75481e0df54e93418bfa4736d",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/030682bc4fcdc0c6fb85b68aec2ffeff6978768a",
+                "reference": "030682bc4fcdc0c6fb85b68aec2ffeff6978768a",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
-                "giggsey/locale": "^1.2",
+                "giggsey/locale": "^1.7",
                 "php": ">=5.3.2"
             },
             "require-dev": {
@@ -30,8 +30,8 @@
                 "pear/pear_exception": "^1.0",
                 "pear/versioncontrol_git": "^0.5",
                 "phing/phing": "^2.7",
-                "phpunit/phpunit": "^4.8|^5.0",
-                "satooshi/php-coveralls": "^1.0|^2.0",
+                "php-coveralls/php-coveralls": "^1.0|^2.0",
+                "phpunit/phpunit": "^4.8.36|^5.0",
                 "symfony/console": "^2.8|^3.0"
             },
             "type": "library",
@@ -72,20 +72,20 @@
                 "phonenumber",
                 "validation"
             ],
-            "time": "2018-04-05T07:34:49+00:00"
+            "time": "2020-04-22T19:37:04+00:00"
         },
         {
             "name": "giggsey/locale",
-            "version": "1.5",
+            "version": "1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/Locale.git",
-                "reference": "3c9cc23c15851c54cb3ccd41a00fd4b5a89feeff"
+                "reference": "85a1b251bad11c986fec2a051b10d4b80a5caa1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/Locale/zipball/3c9cc23c15851c54cb3ccd41a00fd4b5a89feeff",
-                "reference": "3c9cc23c15851c54cb3ccd41a00fd4b5a89feeff",
+                "url": "https://api.github.com/repos/giggsey/Locale/zipball/85a1b251bad11c986fec2a051b10d4b80a5caa1b",
+                "reference": "85a1b251bad11c986fec2a051b10d4b80a5caa1b",
                 "shasum": ""
             },
             "require": {
@@ -96,8 +96,8 @@
                 "pear/pear_exception": "^1.0",
                 "pear/versioncontrol_git": "^0.5",
                 "phing/phing": "~2.7",
+                "php-coveralls/php-coveralls": "^1.0|^2.0",
                 "phpunit/phpunit": "^4.8|^5.0",
-                "satooshi/php-coveralls": "^1.0",
                 "symfony/console": "^2.8|^3.0|^4.0",
                 "symfony/filesystem": "^2.8|^3.0|^4.0",
                 "symfony/finder": "^2.8|^3.0|^4.0",
@@ -121,7 +121,7 @@
                 }
             ],
             "description": "Locale functions required by libphonenumber-for-php",
-            "time": "2018-04-03T15:53:12+00:00"
+            "time": "2019-10-09T18:53:14+00:00"
         }
     ],
     "packages-dev": [],

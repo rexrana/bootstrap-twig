@@ -35,7 +35,7 @@ var folders = {
     // By using styles/**/*.sass we're telling gulp to check all folders for any sass file
     copy: [
       './node_modules/jquery/dist/jquery.slim.min.js',
-      './node_modules/popper.js/dist/umd/popper.min.js',
+      './node_modules/@popperjs/core/dist/umd/popper.min.js',
       './node_modules/bootstrap/dist/js/bootstrap.min.js',
       './src/js/form-validation.js',
     ],
