@@ -4,3 +4,4 @@ dist
 .vscode/
 .directory
 src/scss/block-library/
+composer.lock
