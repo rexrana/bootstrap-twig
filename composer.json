@@ -11,5 +11,8 @@
       "homepage": "https://rexrana.ca/",
       "role": "Developer"
     }
-  ]
+  ],
+  "require": {
+    "timber/timber": "2.0.0-alpha.2"
+  }
 }
