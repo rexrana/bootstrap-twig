@@ -298,7 +298,7 @@ $h4-font-size:                $font-size-base * 1.5;
 $h5-font-size:                $font-size-base * 1.25;
 $h6-font-size:                $font-size-base;
 
-$headings-margin-bottom:      $spacer / 2;
+$headings-margin-bottom:      math.div($spacer, 2);
 $headings-font-family:        null;
 $headings-font-weight:        500;
 $headings-line-height:        1.2;
@@ -706,12 +706,12 @@ $nav-pills-link-active-color:       $component-active-color;
 $nav-pills-link-active-bg:          $component-active-bg;
 
 $nav-divider-color:                 $gray-200;
-$nav-divider-margin-y:              $spacer / 2;
+$nav-divider-margin-y:              math.div($spacer, 2);
 
 
 // Navbar
 
-$navbar-padding-y:                  $spacer / 2;
+$navbar-padding-y:                  math.div($spacer, 2);
 $navbar-padding-x:                  $spacer;
 
 $navbar-nav-link-padding-x:         .5rem;
