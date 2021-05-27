@@ -8,14 +8,17 @@
  * @since   0.1.0
  */
 
+use Timber\Timber;
+use Timber\User;
+
 global $wp_query;
 
-$context = Timber::get_context();
+$context = Timber::context();
 
 require_once ( get_template_directory() . '/inc/archive-posts-pagination.php' );
 
 if ( isset( $wp_query->query_vars['author'] ) ) {
-	$author            = new Timber\User( $wp_query->query_vars['author'] );
+	$author            = Timber::get_user( $wp_query->query_vars['author']);
 	$context['author'] = $author;
 	$context['title']  = 'Author Archives: ' . $author->name();
 }
