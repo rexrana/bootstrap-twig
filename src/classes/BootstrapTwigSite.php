@@ -1,20 +1,12 @@
 <?php
+namespace RexRana\BootstrapTwig;
 
-if ( ! class_exists( 'Timber' ) ) {
-	add_action( 'admin_notices', function() {
-		echo '<div class="error"><p>Timber not activated. Make sure you activate the plugin in <a href="' . esc_url( admin_url( 'plugins.php#timber' ) ) . '">' . esc_url( admin_url( 'plugins.php') ) . '</a></p></div>';
-	});
+use Timber\Timber;
+use Twig\TwigFilter;
+use Timber\Site;
+use Timber\Menu;
 
-	add_filter('template_include', function($template) {
-		return get_stylesheet_directory() . '/static/no-timber.html';
-	});
-
-	return;
-}
-
-Timber::$dirname = array('templates/wordpress');
-
-class BootstrapTwigSite extends TimberSite {
+class BootstrapTwigSite extends Site {
 
 	function __construct() {
 
@@ -25,8 +17,8 @@ class BootstrapTwigSite extends TimberSite {
 		add_theme_support( 'woocommerce' );
 		add_theme_support( 'align-wide' );
 		
-		add_filter( 'timber_context', array( $this, 'add_to_context' ) );
-		add_filter( 'get_twig', array( $this, 'add_to_twig' ) );
+		add_filter( 'timber/context', array( $this, 'add_to_context' ) );
+		add_filter( 'timber/twig', array( $this, 'add_to_twig' ) );
 
 		register_nav_menus( array(
 			'primary' => __( 'Primary Menu', 'bootstrap-twig' ),
@@ -50,8 +42,8 @@ class BootstrapTwigSite extends TimberSite {
 	}
 
 	function add_to_context( $context ) {
-		$context['menu'] = new TimberMenu( 'primary');
-
+		$context['menu'] = Timber::get_menu('primary');
+		
 		$context['body_classes'] = get_body_class();
 
 		$context['search_form'] = get_search_form( false );
@@ -70,10 +62,10 @@ class BootstrapTwigSite extends TimberSite {
 	function add_to_twig( $twig ) {
 		
 		// add filter functions to Twig.
-		$twig->addFilter(new Twig_SimpleFilter('unique', 'array_unique'));
-		$twig->addFilter(new Twig_SimpleFilter('clean_phone', 'bootstrap_twig_clean_phone'));
-		$twig->addFilter(new Twig_SimpleFilter('format_phone', 'bootstrap_twig_format_phone'));
-		$twig->addFilter(new Twig_SimpleFilter('url_domain', 'bootstrap_twig_url_without_protocol'));
+		$twig->addFilter(new TwigFilter('unique', 'array_unique'));
+		$twig->addFilter(new TwigFilter('clean_phone', 'bootstrap_twig_clean_phone'));
+		$twig->addFilter(new TwigFilter('format_phone', 'bootstrap_twig_format_phone'));
+		$twig->addFilter(new TwigFilter('url_domain', 'bootstrap_twig_url_without_protocol'));
 
 		return $twig;
 	}

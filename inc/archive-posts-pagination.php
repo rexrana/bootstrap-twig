@@ -1,6 +1,7 @@
 <?php
+use Timber\Timber;
 
-$feed_posts = new Timber\PostQuery();
+$feed_posts = Timber::get_posts();
 $context['posts'] = $feed_posts;
 
 $feed_pagination = $feed_posts->pagination();

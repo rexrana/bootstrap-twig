@@ -11,8 +11,10 @@
  * @package BootstrapTwig
  * @since   0.1.0
  */
+use Timber\Timber;
+use Timber\Menu;
 
-$context = Timber::get_context();
+$context = Timber::context();
 
 require_once ( get_template_directory() . '/inc/archive-posts-pagination.php' );
 

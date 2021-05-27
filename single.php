@@ -7,9 +7,11 @@
  * @package BootstrapTwig
  * @since   0.1.0
  */
+use Timber\Timber;
+use Timber\Menu;
 
-$context = Timber::get_context();
-$post = Timber::query_post();
+$context = Timber::context();
+$post = Timber::get_post();
 $context['post'] = $post;
 
 // see if there is a comment id in the url
