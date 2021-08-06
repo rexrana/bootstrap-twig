@@ -2,9 +2,7 @@
  
 const Fiber = require('fibers');
 const gulp  = require('gulp');
-const sass  = require('gulp-sass');
-
-sass.compiler = require('sass');
+const sass  = require('gulp-sass')(require('sass'));
 
 const sassGlob     = require('gulp-sass-glob');
 const postcss      = require("gulp-postcss");

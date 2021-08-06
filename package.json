@@ -36,6 +36,7 @@
     "cssnano": "^5.0.4",
     "del": "^5.0.0",
     "fibers": "^4.0.3",
+    "glob-parent": ">=5.1.2",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-postcss": "^9.0.0",
