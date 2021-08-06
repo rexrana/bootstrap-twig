@@ -17,7 +17,7 @@
 {% endif %}
 
 {% if pagination.next.link %}
-  {% set next = next|merge({ 'link': pagination.next.link }) %}
+  {% set next = next|merge({ 'item_link': pagination.next.link }) %}
 {% else %}
   {% set next = next|merge({ 'item_state': 'disabled' }) %}
 {% endif %}
