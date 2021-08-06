@@ -42,7 +42,7 @@ var folders = {
     // Compiled files will end up in whichever folder it's found in (partials are not compiled)
     dest: './dist/js/'
   },
-  php: ['./**/*.php'],
+  php: ['*.php'],
   dist: ['dist/**', '!dist']
 };
 
