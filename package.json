@@ -20,7 +20,7 @@
     "bootstrap",
     "twig"
   ],
-  "author": "Rex Rana",
+  "author": "Peter Hebert <peter@peterhebert.com>",
   "license": "GPL-2.0",
   "bugs": {
     "url": "https://github.com/rexrana/bootstrap-twig/issues"
