@@ -23,6 +23,11 @@
     ]
   },
   "require": {
-    "timber/timber": "2.0.0-alpha.2"
+    "timber/timber": "^2.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
   }
 }

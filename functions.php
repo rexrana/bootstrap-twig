@@ -3,11 +3,12 @@
  * Bootstrap Twig functions file
  * 
  * @package BootstrapTwig
- * @version 0.1.0
+ * @version 1.0.0
  */
 use Timber\Timber;
 
-define('BOOTSTRAP_VERSION', '4.4.1');
+define('BOOTSTRAP_VERSION', '5.3.2');
+define('BSTWIG_THEME_VERSION', '1.0.0');
 
 // autoloader
 require_once (__DIR__ . '/vendor/autoload.php');
@@ -20,7 +21,9 @@ Timber::$dirname = array('templates/wordpress');
 // require_once (__DIR__ . '/inc/misc.php');
 // require_once (__DIR__ . '/inc/sidebars.php');
 
-new RexRana\BootstrapTwig\BootstrapTwigSite();
+add_action( 'after_setup_theme', function() {
+    new RexRana\BootstrapTwig\BootstrapTwigSite();
+});
 
 // removes the default image from WooCommerce, so we can add our own manually
 remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail' );
