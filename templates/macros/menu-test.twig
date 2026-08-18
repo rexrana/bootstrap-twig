@@ -60,15 +60,15 @@
       {% if item.children %}
           {% set link_attributes = link_attributes|merge({
           'id': 'dropdown-toggle-' ~ item.id,
-          'data-toggle': 'dropdown',
+          'data-bs-toggle': 'dropdown',
           'role': 'button',
-          'aria-haspopup': 'true',
-          'aria-expanded': 'false'
+          'aria-expanded': 'false',
+          'aria-haspopup': 'true'
           }) %}
       {% endif %}
 
       {% set link_classes = [
-      menu_level > 0  ? 'dropdown-item' : 'nav-link',
+      menu_level > 0 ? 'dropdown-item' : 'nav-link',
       item.children ? 'dropdown-toggle',
       item.current and (not item_element) ? 'active',
       ] %}
@@ -96,7 +96,7 @@
       {% set subnav_id = 'submenu-' ~ item.id  %}
       {% set subnav_classes = ['dropdown-menu'] %}
 
-      {{ submenu.print_menu( item.children, subnav_id, subnav_classes, 'div', false, menu_level + 1 ) }}
+      {{ submenu.print_menu( item.children, subnav_id, subnav_classes, 'ul', 'li', menu_level + 1 ) }}
 
 
       {% endif %}
