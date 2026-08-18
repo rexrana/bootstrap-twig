@@ -1,6 +1,6 @@
 {% import '@macros/menu-test.twig' as menus %}
 
 {% set menu_id = 'menu-' ~ menu.id  %}
-{% set menu_classes = ['navbar-nav', 'mr-auto'] %}
+{% set menu_classes = ['navbar-nav', 'me-auto'] %}
 
 {{ menus.print_menu( menu.items, menu_id, menu_classes, 'ul', 'li' ) }}

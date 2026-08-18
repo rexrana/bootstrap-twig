@@ -35,6 +35,7 @@
 
 {% set dropdown_menu_element = dropdown_menu_element | default('a') %}
 {% set dropdown_menu_aria_label = button_id ? 'aria-labelledby="' ~ button_id ~ '"' %}
+{% set dropdown_menu_alignment = dropdown_menu_right ? ' dropdown-menu-end' : '' %}
 
 <{{ dropdown_element }} class="{{ dropdown_classes }}">
   {% if dropdown_split %}
@@ -46,7 +47,7 @@
     } %}
   {% endif %}
 
-  <div class="dropdown-menu {{ dropdown_menu_right }}" {{ dropdown_menu_aria_label }}>
+  <div class="dropdown-menu{{ dropdown_menu_alignment }}" {{ dropdown_menu_aria_label }}>
     {% block dropdown_menu_content%}
     {% for dropdown_menu_item in dropdown_menu_items %}
       <{{ dropdown_menu_element }} class="dropdown-item {{ dropdown_menu_item.dropdown_menu_item_disabled }}" href="#" >

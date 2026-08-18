@@ -1,5 +1,5 @@
 <div class="media my-4 comment {{comment.comment_type}}" id="comment-{{comment.ID}}">
-	<img class="d-flex mr-3 rounded-circle" src="{{ comment.author.avatar.src }}" alt="{{ comment.author.name }}">
+	<img class="d-flex me-3 rounded-circle" src="{{ comment.author.avatar.src }}" alt="{{ comment.author.name }}">
 	<div class="media-body">
 		<h5 class="mt-0">{{ comment.author.name }}</h5>
 		{{comment.comment_content|wpautop}}
