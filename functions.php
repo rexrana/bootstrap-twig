@@ -16,10 +16,9 @@ require_once (__DIR__ . '/vendor/autoload.php');
 Timber::$dirname = array('templates/wordpress');
 
 // load includes
-// require_once (__DIR__ . '/inc/timber.php');
-// require_once (__DIR__ . '/inc/enqueue.php');
-// require_once (__DIR__ . '/inc/misc.php');
-// require_once (__DIR__ . '/inc/sidebars.php');
+require_once (__DIR__ . '/inc/enqueue.php');
+require_once (__DIR__ . '/inc/misc.php');
+require_once (__DIR__ . '/inc/sidebars.php');
 
 add_action( 'after_setup_theme', function() {
     new RexRana\BootstrapTwig\BootstrapTwigSite();
