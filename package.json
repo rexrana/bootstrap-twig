@@ -27,8 +27,7 @@
   },
   "homepage": "https://github.com/rexrana/bootstrap-twig#readme",
   "browserslist": [
-    "last 2 versions",
-    "Firefox ESR"
+    "defaults"
   ],
   "devDependencies": {
     "laravel-mix": "^6.0.49",
@@ -39,5 +38,8 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.2"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.6.0": true
   }
 }
