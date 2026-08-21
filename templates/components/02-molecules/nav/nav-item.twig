@@ -28,7 +28,7 @@
 
   {% set js_attributes = [
     'id="' ~ nav_item_id ~ '"',
-    'data-toggle="tab"',
+    'data-bs-toggle="tab"',
     'role="tab"',
     'aria-controls="' ~ nav_item_text ~ '"',
   ] | sort | join(' ') | trim %}

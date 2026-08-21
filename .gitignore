@@ -5,3 +5,4 @@ dist
 .directory
 src/scss/block-library/
 composer.lock
+mix-manifest.json

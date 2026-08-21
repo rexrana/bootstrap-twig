@@ -11,5 +11,23 @@
       "homepage": "https://rexrana.ca/",
       "role": "Developer"
     }
-  ]
+  ],
+  "autoload": {
+    "psr-4": {
+      "RexRana\\BootstrapTwig\\": ["src/classes"]
+    },
+    "files": [
+      "inc/enqueue.php",
+      "inc/misc.php",
+      "inc/sidebars.php"
+    ]
+  },
+  "require": {
+    "timber/timber": "^2.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
+  }
 }

@@ -27,8 +27,8 @@
 
 {% set classes = [
   'badge',
-  badge_pill ? 'badge-pill',
-  badge_color in status_classes ? 'badge-' ~ badge_color,
+  badge_pill ? 'rounded-pill',
+  badge_color in status_classes ? 'bg-' ~ badge_color,
   badge_other_classes,
 ] | merge(badge_classes|default([])) | sort | join(' ') | trim %}
 

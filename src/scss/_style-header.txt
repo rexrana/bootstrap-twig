@@ -1,10 +1,13 @@
 /*
  * Theme Name: Bootstrap Twig
  * Description: WordPress starter theme using Twig templates via Timber library, includes Bootstrap 4 framework
- * Author: Rex Rana Design and Development Ltd.
- * Author URI: https://rexrana.ca/
+ * Author: Peter Hebert
+ * Author URI: https://peterhebert.com/
  * Version: 1.0.0
  * License: GNU General Public License v2 or later
  * Text Domain: bootstrap-twig
  * Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Tested up to: 6.3.1
+ * Requires PHP: 8.1
 */

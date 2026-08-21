@@ -27,7 +27,7 @@
 } | merge( navbar_attributes | default({}) )  %}
 
 {% if navbar_aria_label %}
-{% set attributes = attributes|merge({ 'aria-labelledby': navbar_aria_label }) %}
+{% set navbar_attributes = navbar_attributes|merge({ 'aria-labelledby': navbar_aria_label }) %}
 {% endif %}
 
 {# collapse tag attibutes down to a string #}
@@ -47,8 +47,8 @@
     button_unstyled: true,
     button_classes: ['navbar-toggler'],
     attributes: {
-      'data-toggle': 'collapse',
-      'data-target': '#' ~ navbar_collapse_id,
+      'data-bs-toggle': 'collapse',
+      'data-bs-target': '#' ~ navbar_collapse_id,
       'aria-controls': navbar_collapse_id,
       'aria-expanded': 'false',
       'aria-label': navbar_toggle_label,

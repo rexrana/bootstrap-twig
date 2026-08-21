@@ -18,7 +18,7 @@
   button_active: Boolean: True|False set button to appear pressed.
   button_classes: array : Other classes not specified in the template.
 
-  button_toggle: String: button|collapse set button's data-toggle html value.
+  button_toggle: String: button|collapse set button's data-bs-toggle html value.
   button_link: String: the URL the button will lead to.
   button_value: String: the html 'value' attribute.
   button_id: String: The button's html 'id' attribute.
@@ -33,7 +33,7 @@
   button_color ? 'btn-' ~ button_color,
   button_outline ? 'btn-outline-' ~ button_color,
   button_size and button_size in ['sm', 'lg'] ? 'btn-' ~ button_size,
-  button_block ? 'btn-block',
+  button_block ? 'w-100',
   button_active ? 'active'
 ]|merge( button_classes|default(['btn']) ) %}
 
@@ -46,7 +46,7 @@
 {% endif %}
 
 {% if button_toggle %}
-  {% set attributes = attributes|merge({ 'data-toggle': button_toggle }) %}
+  {% set attributes = attributes|merge({ 'data-bs-toggle': button_toggle }) %}
 {% endif %}
 
 {% if button_link %}
@@ -59,4 +59,15 @@
 
 {% if button_id %}
   {% set attributes = attributes|merge({ 'id': button_id }) %}
+{% endif %}
+
+{% if button_disabled %}
+  {% if element == 'a' %}
+    {% set attributes = attributes|merge({
+      'aria-disabled': 'true',
+      'tabindex': '-1'
+    }) %}
+  {% else %}
+    {% set attributes = attributes|merge({ 'disabled': true }) %}
+  {% endif %}
 {% endif %}
